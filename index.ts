@@ -7,12 +7,12 @@ moduleAlias.addAliases({
 });
 
 import configExpress from '@config/express';
-import configSessions from '@config/sessions';
+// import configSessions from '@config/sessions';
 import configRoutes from '@config/routes';
 import configStaticFiles from '@config/staticFiles';
 
 const [app] = configExpress();
-const [sessionParser] = configSessions();
+// const [sessionParser] = configSessions();
 configRoutes(app);
 configStaticFiles(app);
 

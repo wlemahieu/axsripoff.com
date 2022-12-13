@@ -11,6 +11,7 @@ const getRedisHost = () => {
   }
 };
 
+/*
 // create express session using redis
 const redisStore = connectRedis(session);
 const redisClient = new Redis({
@@ -30,8 +31,10 @@ const cookie = {
 const resave = false;
 const saveUninitialized = false;
 const unset = 'destroy';
+*/
 
 export default () => {
+  /*
   const store = new redisStore({
     client: redisClient,
     ttl: 1000 * 60 * 60, // 1hr TTL
@@ -48,4 +51,5 @@ export default () => {
   });
 
   return [sessionParser];
+  */
 };
