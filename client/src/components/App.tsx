@@ -70,7 +70,7 @@ const App: Component = () => {
     <>
       <CssBaseline />
       <AppContext.Provider value={[state, wss]}>
-        <Show when={!state.sessionID.length}>
+        <Show when={true}>
           <Router>
             <Container maxWidth="md">
               <Header />
