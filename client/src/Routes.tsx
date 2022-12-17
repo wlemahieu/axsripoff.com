@@ -8,6 +8,7 @@ import About from '@views/About';
 import Terms from '@src/views/Terms';
 import Privacy from '@src/views/Privacy';
 import Contact from '@views/Contact';
+import Login from '@views/Login';
 
 const Routes: Component = () => {
   return (
@@ -17,6 +18,7 @@ const Routes: Component = () => {
       <Route path="/terms" component={Terms} />
       <Route path="/privacy" component={Privacy} />
       <Route path="/contact" component={Contact} />
+      <Route path="/login" component={Login} />
     </Router>
   );
 };
