@@ -13,7 +13,7 @@ const AppleLogin: Component = () => {
   const signIn = () => signInWithPopup(getAuth(app), new OAuthProvider('apple.com'));
 
   return (
-    <Button onClick={signIn} class={styles.btn} variant="text" size="small">
+    <Button disabled onClick={signIn} class={styles.btn} variant="text" size="small">
       <img src={svg} class={styles.icon} alt="" />
       <span>Sign in with Apple</span>
     </Button>

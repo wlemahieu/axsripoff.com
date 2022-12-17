@@ -48,7 +48,7 @@ const EmailLogin: Component = () => {
           </div>
         </div>
       </Show>
-      <Button onClick={signIn} class={loginStyles.btn} variant="text" size="small" disabled>
+      <Button disabled onClick={signIn} class={loginStyles.btn} variant="text" size="small" disabled>
         <Email class={loginStyles.icon} />
         <span>Sign in with email</span>
       </Button>

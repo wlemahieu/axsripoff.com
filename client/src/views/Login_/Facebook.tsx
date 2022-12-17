@@ -14,6 +14,7 @@ const FacebookLogin: Component = () => {
 
   return (
     <Button
+      disabled
       onClick={signIn}
       class={styles.btn}
       variant="text"
