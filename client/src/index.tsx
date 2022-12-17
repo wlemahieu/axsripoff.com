@@ -7,6 +7,7 @@ import { render } from 'solid-js/web';
 import App from '@components/App';
 import { FirebaseProvider } from 'solid-firebase';
 import { initializeApp as initFirebase } from 'firebase/app';
+import { initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check';
 import { getAnalytics, logEvent } from 'firebase/analytics';
 
 const firebaseConfig = {
@@ -21,9 +22,13 @@ const firebaseConfig = {
 
 const app = initFirebase(firebaseConfig);
 const analytics = getAnalytics(app);
-
+const appCheck = initializeAppCheck(app, {
+  provider: new ReCaptchaV3Provider('6LeJjokjAAAAAMlKkiNctcVueYJ-WvPZhlWvTn2a'),
+  isTokenAutoRefreshEnabled: true,
+});
 logEvent(analytics, 'app started');
 
+console.log('appCheck', appCheck);
 render(
   () => (
     <FirebaseProvider config={firebaseConfig}>

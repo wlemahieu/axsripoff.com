@@ -15,7 +15,7 @@ const GithubLogin: Component = () => {
   return (
     <Button onClick={signIn} class={styles.btn} variant="text" size="small">
       <img src={svg} class={styles.icon} alt="" />
-      <span>Sign in with Google</span>
+      <span>Sign in with Github</span>
     </Button>
   );
 };
