@@ -28,7 +28,6 @@ const appCheck = initializeAppCheck(app, {
 });
 logEvent(analytics, 'app started');
 
-console.log('appCheck', appCheck);
 render(
   () => (
     <FirebaseProvider config={firebaseConfig}>
