@@ -1,0 +1,16 @@
+.root {
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 3rem;
+}
+
+.list {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  text-align: center;
+}
+
+.list > li {
+  margin-right: 1rem;
+}

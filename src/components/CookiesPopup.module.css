@@ -1,0 +1,45 @@
+.root {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  max-height: 90px;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: white;
+  border-top: 1px solid grey !important;
+  font-size: 12px !important;
+  align-self: flex-end;
+  z-index: 999;
+}
+
+.narrow {
+  max-height: inherit;
+  flex-direction: column;
+}
+
+.narrowBtns {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+
+.btn {
+  font-size: 12px !important;
+  border-radius: 0px !important;
+  max-height: 50px !important;
+  vertical-align: baseline !important;
+}
+
+.wideBtn {
+  width: 100px;
+  flex-basis: 150px;
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+
+.verbiage {
+  padding: 1rem;
+}

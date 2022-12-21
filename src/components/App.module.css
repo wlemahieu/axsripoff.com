@@ -1,0 +1,6 @@
+.root {
+  height: 100%;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+}

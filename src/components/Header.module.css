@@ -1,0 +1,14 @@
+.root {
+  text-align: center;
+}
+
+.logo {
+  height: 33vmin !important;
+  width: 33vmin !important;
+  pointer-events: none;
+  margin: 0 auto;
+}
+
+.link {
+  text-decoration: none !important;
+}
