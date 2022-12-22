@@ -40,7 +40,7 @@ if (import.meta.env.MODE === 'development' || import.meta.env.dev) {
   const storage = getStorage(app);
   const auth = getAuth(app);
   connectFunctionsEmulator(functions, '127.0.0.1', 5001);
-  connectAuthEmulator(auth, 'http://localhost:9099', { disableWarnings: true });
+  connectAuthEmulator(auth, 'http://localhost:9099');
   connectStorageEmulator(storage, '127.0.0.1', 9199);
 }
 

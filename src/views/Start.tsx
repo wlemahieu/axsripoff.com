@@ -2,14 +2,13 @@
  * Start page view
  */
 import { FC } from 'react';
-import styles from '@views/Login.module.css';
 import useGetFirebaseUser from '@src/hooks/useGetFirebaseUser';
-import LoggedIn from '@views/Login_/LoggedIn';
-import LoggedOut from '@views/Login_/LoggedOut';
+import LoggedOut from '@src/views/Start_/LoggedOut';
+import styles from '@views/Login.module.css';
 
 const Start: FC = () => {
   const user = useGetFirebaseUser();
-  return <div className={styles.root}>{!user ? <LoggedOut /> : <LoggedIn />}</div>;
+  return <div className={styles.root}>{!user ? <LoggedOut /> : null}</div>;
 };
 
 export default Start;

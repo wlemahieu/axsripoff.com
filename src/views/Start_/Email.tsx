@@ -3,7 +3,7 @@
  */
 import { FC, useState } from 'react';
 import loginStyles from '@views/Login.module.css';
-import styles from '@views/Login_/Email.module.css';
+import styles from '@views/Start_/Email.module.css';
 import Button from '@mui/material/Button';
 import Email from '@mui/icons-material/Email';
 import TextField from '@mui/material/TextField';
