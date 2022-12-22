@@ -2,3 +2,8 @@
   text-align: center;
   height: 100%;
 }
+
+.form {
+  border: 1px solid black;
+  margin: 2rem;
+}

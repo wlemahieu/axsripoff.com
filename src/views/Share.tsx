@@ -1,27 +1,28 @@
 /**
  * Share page view
  */
-import { FC } from 'react';
+import { Dispatch, FC, SetStateAction, useState } from 'react';
+import { createContext, Context } from 'use-context-selector';
 import styles from '@views/Share.module.css';
-import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { Button } from '@mui/material';
+import SharePrompt from './Share_/SharePrompt';
+import ShareForm from './Share_/ShareForm';
+
+export interface ShareI {
+  started: boolean;
+  setStarted: Dispatch<SetStateAction<boolean>>;
+}
+
+export const ShareContext = createContext<ShareI | null>(null) as Context<ShareI>;
 
 const Share: FC = () => {
+  const [started, setStarted] = useState(false);
   return (
-    <Container maxWidth="xs" className={styles.root}>
-      <Typography variant="h4" gutterBottom>
-        Share your complaint.
-      </Typography>
-      <Typography variant="body2" gutterBottom>
-        Sharing your complaint is simple and free! Be <b>truthful</b> and accurate. You can optionally provide up to 3
-        images to describe your situation. All submissions <b>will be reviewed</b> before being made live on the
-        website.
-      </Typography>
-      <Button variant="contained" color="primary">
-        Start
-      </Button>
-    </Container>
+    <ShareContext.Provider value={{ started, setStarted }}>
+      <Container maxWidth="xs" className={styles.root}>
+        {!started ? <SharePrompt /> : <ShareForm />}
+      </Container>
+    </ShareContext.Provider>
   );
 };
 
