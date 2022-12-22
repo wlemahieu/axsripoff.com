@@ -19,7 +19,7 @@ const LoggedOut: FC = () => {
   return (
     <Container maxWidth="xs">
       <Typography variant="h6" gutterBottom>
-        Please login in to share you story.
+        Please login in to share you complaint.
       </Typography>
       <div className={styles.root}>
         <GoogleLogin />

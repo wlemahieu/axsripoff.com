@@ -11,10 +11,10 @@ const Share: FC = () => {
   return (
     <Container maxWidth="xs" className={styles.root}>
       <Typography variant="h4" gutterBottom>
-        Share your story
+        Share your complaint.
       </Typography>
       <Typography variant="body2" gutterBottom>
-        Sharing your story is simple and free! Be <b>truthful</b> and accurate. You can optionally provide up to 3
+        Sharing your complaint is simple and free! Be <b>truthful</b> and accurate. You can optionally provide up to 3
         images to describe your situation. All submissions <b>will be reviewed</b> before being made live on the
         website.
       </Typography>

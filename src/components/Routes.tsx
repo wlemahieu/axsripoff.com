@@ -2,7 +2,7 @@
  * All component routes
  */
 import { FC, useEffect } from 'react';
-import { Navigate, Route, Routes as RouteSwitch, useNavigate } from 'react-router-dom';
+import { Route, Routes as RouteSwitch, useNavigate } from 'react-router-dom';
 import Home from '@views/Home';
 import About from '@views/About';
 import Terms from '@src/views/Terms';

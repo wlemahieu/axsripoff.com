@@ -27,7 +27,7 @@ const Home: FC = () => {
         Complaints
       </Typography>
       <Button variant="contained" color="primary" onClick={onClick}>
-        Share your story
+        Share your complaint
       </Button>
     </Container>
   );

@@ -2,7 +2,7 @@
  * App structure, session fetch, socket listeners
  */
 import { FC, useEffect, useRef } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import Header from '@components/Header';
 import Footer from '@components/Footer';
 import Routes from '@src/components/Routes';
@@ -49,6 +49,7 @@ const theme = createTheme({
 
 const App: FC = () => {
   const ref = useRef<HTMLDivElement>(null);
+  const location = useLocation();
 
   // connect to the local firebase functions / auth emulators
   if (import.meta.env.DEV) {
@@ -63,20 +64,18 @@ const App: FC = () => {
     if (ref.current) {
       ref.current.scrollIntoView();
     }
-  }, [ref.current]);
+  }, [location.pathname]);
 
   return (
-    <BrowserRouter>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Container maxWidth="md" className={styles.root} ref={ref}>
-          <Header />
-          <Routes />
-          <Footer />
-        </Container>
-        <CookiesPopup />
-      </ThemeProvider>
-    </BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Container maxWidth="md" className={styles.root} ref={ref}>
+        <Header />
+        <Routes />
+        <Footer />
+      </Container>
+      <CookiesPopup />
+    </ThemeProvider>
   );
 };
 
