@@ -211,9 +211,9 @@ const Privacy: FC = () => {
         Cookies can be &quot;Persistent&quot; or &quot;Session&quot; Cookies. Persistent Cookies remain on Your personal
         computer or mobile device when You go offline, while Session Cookies are deleted as soon as You close Your web
         browser. You can learn more about cookies on{' '}
-        <a href="https://www.termsfeed.com/blog/cookies/#What_Are_Cookies" target="_blank">
+        <Link href="https://www.termsfeed.com/blog/cookies/#What_Are_Cookies" target="_blank">
           TermsFeed website
-        </a>{' '}
+        </Link>{' '}
         article.
       </Typography>
       <Typography variant="body2">
@@ -465,9 +465,9 @@ const Privacy: FC = () => {
           <Typography variant="body2">
             For more information on the privacy practices of Google, please visit the Google Privacy &amp; Terms web
             page:{' '}
-            <a href="https://policies.google.com/privacy" rel="external nofollow noopener" target="_blank">
+            <Link href="https://policies.google.com/privacy" rel="external nofollow noopener" target="_blank">
               https://policies.google.com/privacy
-            </a>
+            </Link>
           </Typography>
         </li>
         <li>
@@ -478,9 +478,9 @@ const Privacy: FC = () => {
           <Typography variant="body2">
             You may opt-out of certain Firebase features through your mobile device settings, such as your device
             advertising settings or by following the instructions provided by Google in their Privacy Policy:{' '}
-            <a href="https://policies.google.com/privacy" rel="external nofollow noopener" target="_blank">
+            <Link href="https://policies.google.com/privacy" rel="external nofollow noopener" target="_blank">
               https://policies.google.com/privacy
-            </a>
+            </Link>
           </Typography>
           <Typography variant="body2">
             We also encourage you to review the Google's policy for safeguarding your data:{' '}
@@ -521,9 +521,9 @@ const Privacy: FC = () => {
           </Typography>
           <Typography variant="body2">
             Their Privacy Policy can be viewed at{' '}
-            <a href="https://www.twilio.com/legal/privacy" rel="external nofollow noopener" target="_blank">
+            <Link href="https://www.twilio.com/legal/privacy" rel="external nofollow noopener" target="_blank">
               https://www.twilio.com/legal/privacy
-            </a>
+            </Link>
           </Typography>
         </li>
       </ul>
@@ -544,9 +544,13 @@ const Privacy: FC = () => {
           </Typography>
           <Typography variant="body2">
             The information gathered by reCAPTCHA is held in accordance with the Privacy Policy of Google:{' '}
-            <a href="https://www.google.com/intl/en/policies/privacy/" rel="external nofollow noopener" target="_blank">
+            <Link
+              href="https://www.google.com/intl/en/policies/privacy/"
+              rel="external nofollow noopener"
+              target="_blank"
+            >
               https://www.google.com/intl/en/policies/privacy/
-            </a>
+            </Link>
           </Typography>
         </li>
       </ul>
@@ -1113,21 +1117,21 @@ const Privacy: FC = () => {
       <ul>
         <li>
           The NAI's opt-out platform:{' '}
-          <a href="http://www.networkadvertising.org/choices/" rel="external nofollow noopener" target="_blank">
+          <Link href="http://www.networkadvertising.org/choices/" rel="external nofollow noopener" target="_blank">
             http://www.networkadvertising.org/choices/
-          </a>
+          </Link>
         </li>
         <li>
           The EDAA's opt-out platform{' '}
-          <a href="http://www.youronlinechoices.com/" rel="external nofollow noopener" target="_blank">
+          <Link href="http://www.youronlinechoices.com/" rel="external nofollow noopener" target="_blank">
             http://www.youronlinechoices.com/
-          </a>
+          </Link>
         </li>
         <li>
           The DAA's opt-out platform:{' '}
-          <a href="http://optout.aboutads.info/?c=2&amp;lang=EN" rel="external nofollow noopener" target="_blank">
+          <Link href="http://optout.aboutads.info/?c=2&amp;lang=EN" rel="external nofollow noopener" target="_blank">
             http://optout.aboutads.info/?c=2&amp;lang=EN
-          </a>
+          </Link>
         </li>
       </ul>
       <Typography variant="body2">

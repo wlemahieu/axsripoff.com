@@ -133,17 +133,21 @@ const Cookies: FC = () => {
         <li>
           <Typography variant="body2">
             For the Chrome web browser, please visit this page from Google:{' '}
-            <a href="https://support.google.com/accounts/answer/32050" rel="external nofollow noopener" target="_blank">
+            <Link
+              href="https://support.google.com/accounts/answer/32050"
+              rel="external nofollow noopener"
+              target="_blank"
+            >
               https://support.google.com/accounts/answer/32050
-            </a>
+            </Link>
           </Typography>
         </li>
         <li>
           <Typography variant="body2">
             For the Internet Explorer web browser, please visit this page from Microsoft:{' '}
-            <a href="http://support.microsoft.com/kb/278835" rel="external nofollow noopener" target="_blank">
+            <Link href="http://support.microsoft.com/kb/278835" rel="external nofollow noopener" target="_blank">
               http://support.microsoft.com/kb/278835
-            </a>
+            </Link>
           </Typography>
         </li>
         <li>
@@ -177,9 +181,9 @@ const Cookies: FC = () => {
       <Typography variant="h3">More Information about Cookies</Typography>
       <Typography variant="body2">
         You can learn more about cookies here:{' '}
-        <a href="https://www.termsfeed.com/blog/cookies/" target="_blank">
+        <Link href="https://www.termsfeed.com/blog/cookies/" target="_blank">
           All About Cookies by TermsFeed
-        </a>
+        </Link>
         .
       </Typography>
       <Typography variant="h3">Contact Us</Typography>
