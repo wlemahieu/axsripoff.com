@@ -19,11 +19,11 @@ const SharePrompt: FC = () => {
         Share your complaint.
       </Typography>
       <Typography variant="body2" gutterBottom>
-        Sharing your complaint is simple and free! Be <b>truthful</b> and accurate. You can optionally provide up to 3
+        Sharing your complaint is simple and free! Be <b>truthful</b> and accurate. You can optionally provide up to 6
         images to describe your situation. All submissions <b>will be reviewed</b> before being made live on the
         website.
       </Typography>
-      <Button variant="contained" color="primary" onClick={onStart} disabled>
+      <Button variant="contained" color="primary" onClick={onStart}>
         Start
       </Button>
     </Container>

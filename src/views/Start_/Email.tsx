@@ -1,54 +1,33 @@
 /**
  * Email login button
  */
-import { FC, useState } from 'react';
+import { Dispatch, FC, SetStateAction, useState } from 'react';
+import { createContext, Context } from 'use-context-selector';
+
 import loginStyles from '@views/Login.module.css';
-import styles from '@views/Start_/Email.module.css';
 import Button from '@mui/material/Button';
 import Email from '@mui/icons-material/Email';
-import TextField from '@mui/material/TextField';
+import EmailModal from './EmailModal';
+
+export interface EmailI {
+  modalOpen: boolean;
+  setModalOpen: Dispatch<SetStateAction<boolean>>;
+}
+
+export const EmailContext = createContext<EmailI | null>(null) as Context<EmailI>;
 
 const EmailLogin: FC = () => {
-  const [emailModalOpen, setEmailModalOpen] = useState(false);
-  const [email, setEmail] = useState('');
-  const onChangeEmail = (text: string) => setEmail(text);
-  const onCancel = () => {
-    setEmailModalOpen(false);
-  };
-
-  const signIn = () => {
-    setEmailModalOpen(true);
-  };
+  const [modalOpen, setModalOpen] = useState(false);
+  const onStart = () => setModalOpen(true);
 
   return (
-    <>
-      {emailModalOpen ? (
-        <div className={styles.modal}>
-          Sign in with Email
-          <TextField
-            fullWidth
-            id="email"
-            label="Email"
-            variant="filled"
-            value={email}
-            onChange={(e) => onChangeEmail(e.currentTarget.value)}
-            required
-          />
-          <div className={styles.cancelNext}>
-            <Button fullWidth color="error" variant="contained" onClick={onCancel}>
-              Cancel
-            </Button>
-            <Button fullWidth color="primary" variant="contained">
-              Next
-            </Button>
-          </div>
-        </div>
-      ) : null}
-      <Button onClick={signIn} className={loginStyles.btn} variant="text" size="small" disabled>
+    <EmailContext.Provider value={{ modalOpen, setModalOpen }}>
+      {modalOpen ? <EmailModal /> : null}
+      <Button onClick={onStart} className={loginStyles.btn} variant="text" size="small">
         <Email className={loginStyles.icon} />
         <span>Sign in with email</span>
       </Button>
-    </>
+    </EmailContext.Provider>
   );
 };
 
