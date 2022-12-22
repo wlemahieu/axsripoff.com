@@ -13,10 +13,14 @@ import PhoneLogin from './Phone';
 import MicrosoftLogin from './Microsoft';
 import AppleLogin from './Apple';
 import GuestLogin from './Guest';
+import { Typography } from '@mui/material';
 
 const LoggedOut: FC = () => {
   return (
     <Container maxWidth="xs">
+      <Typography variant="h6" gutterBottom>
+        Please login in to share you story.
+      </Typography>
       <div className={styles.root}>
         <GoogleLogin />
         <FacebookLogin />

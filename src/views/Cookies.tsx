@@ -193,7 +193,7 @@ const Cookies: FC = () => {
         <li>
           <Typography variant="body2">
             By visiting this page on our website:{' '}
-            <Link onClick={() => navigate('/cookies')}>https://pugsllc.com/cookies</Link>
+            <Link onClick={() => navigate('/cookies')}>https://axsripoff.com/cookies</Link>
           </Typography>
         </li>
       </ul>

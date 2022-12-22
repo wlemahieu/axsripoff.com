@@ -1,7 +1,7 @@
 /**
  * App structure, session fetch, socket listeners
  */
-import { FC } from 'react';
+import { FC, useEffect, useRef } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import Header from '@components/Header';
 import Footer from '@components/Footer';
@@ -48,6 +48,8 @@ const theme = createTheme({
 });
 
 const App: FC = () => {
+  const ref = useRef<HTMLDivElement>(null);
+
   // connect to the local firebase functions / auth emulators
   if (import.meta.env.DEV) {
     const region = 'us-west1';
@@ -57,11 +59,17 @@ const App: FC = () => {
     connectAuthEmulator(auth, 'http://localhost:9099');
   }
 
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.scrollIntoView();
+    }
+  }, [ref.current]);
+
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Container maxWidth="md" className={styles.root}>
+        <Container maxWidth="md" className={styles.root} ref={ref}>
           <Header />
           <Routes />
           <Footer />

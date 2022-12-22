@@ -1,17 +1,29 @@
 /**
  * All component routes
  */
-import { FC } from 'react';
-import { Route, Routes as RouteSwitch } from 'react-router-dom';
+import { FC, useEffect } from 'react';
+import { Navigate, Route, Routes as RouteSwitch, useNavigate } from 'react-router-dom';
 import Home from '@views/Home';
 import About from '@views/About';
 import Terms from '@src/views/Terms';
 import Privacy from '@src/views/Privacy';
 import Cookies from '@src/views/Cookies';
 import Contact from '@views/Contact';
-import Login from '@views/Login';
+import Start from '@src/views/Start';
+import Share from '@views/Share';
+
+import useGetFirebaseUser from '@src/hooks/useGetFirebaseUser';
 
 const Routes: FC = () => {
+  const user = useGetFirebaseUser();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      navigate(`/share`);
+    }
+  }, [user]);
+
   return (
     <RouteSwitch>
       <Route path="/" element={<Home />} />
@@ -20,7 +32,8 @@ const Routes: FC = () => {
       <Route path="/privacy" element={<Privacy />} />
       <Route path="/cookies" element={<Cookies />} />
       <Route path="/contact" element={<Contact />} />
-      <Route path="/login" element={<Login />} />
+      {!user ? <Route path="/start" element={<Start />} /> : null}
+      {user ? <Route path="/share" element={<Share />} /> : null}
     </RouteSwitch>
   );
 };
