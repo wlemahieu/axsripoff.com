@@ -484,24 +484,24 @@ const Privacy: FC = () => {
           </Typography>
           <Typography variant="body2">
             We also encourage you to review the Google's policy for safeguarding your data:{' '}
-            <a
+            <Link
               href="https://support.google.com/analytics/answer/6004245"
               rel="external nofollow noopener"
               target="_blank"
             >
               https://support.google.com/analytics/answer/6004245
-            </a>
+            </Link>
           </Typography>
           <Typography variant="body2">
             For more information on what type of information Firebase collects, please visit the How Google uses data
             when you use our partners' sites or apps webpage:{' '}
-            <a
+            <Link
               href="https://policies.google.com/technologies/partner-sites"
               rel="external nofollow noopener"
               target="_blank"
             >
               https://policies.google.com/technologies/partner-sites
-            </a>
+            </Link>
           </Typography>
         </li>
       </ul>

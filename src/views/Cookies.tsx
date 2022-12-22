@@ -153,25 +153,25 @@ const Cookies: FC = () => {
         <li>
           <Typography variant="body2">
             For the Firefox web browser, please visit this page from Mozilla:{' '}
-            <a
+            <Link
               href="https://support.mozilla.org/en-US/kb/delete-cookies-remove-info-websites-stored"
               rel="external nofollow noopener"
               target="_blank"
             >
               https://support.mozilla.org/en-US/kb/delete-cookies-remove-info-websites-stored
-            </a>
+            </Link>
           </Typography>
         </li>
         <li>
           <Typography variant="body2">
             For the Safari web browser, please visit this page from Apple:{' '}
-            <a
+            <Link
               href="https://support.apple.com/guide/safari/manage-cookies-and-website-data-sfri11471/mac"
               rel="external nofollow noopener"
               target="_blank"
             >
               https://support.apple.com/guide/safari/manage-cookies-and-website-data-sfri11471/mac
-            </a>
+            </Link>
           </Typography>
         </li>
       </ul>
