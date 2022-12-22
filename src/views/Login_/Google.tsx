@@ -4,12 +4,13 @@
 import svg from '@assets/google.svg';
 import { FC } from 'react';
 import styles from '@views/Login.module.css';
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import useGetFirebaseAuth from '@src/hooks/useGetFirebaseAuth';
+import { GoogleAuthProvider, signInWithPopup } from '@firebase/auth';
 import Button from '@mui/material/Button';
+import useGetFirebaseAuth from '@src/hooks/useGetFirebaseAuth';
 
 const GoogleLogin: FC = () => {
   const auth = useGetFirebaseAuth();
+
   const signIn = () => signInWithPopup(auth, new GoogleAuthProvider());
 
   return (

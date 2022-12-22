@@ -6,11 +6,14 @@ import './index.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import App from '@src/components/App';
-import { initializeApp, FirebaseApp } from 'firebase/app';
-import { initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check';
 import { createContext } from 'use-context-selector';
-import { getAnalytics, logEvent } from 'firebase/analytics';
+import { initializeApp, FirebaseApp } from '@firebase/app';
+import { initializeAppCheck, ReCaptchaV3Provider } from '@firebase/app-check';
+import { getAnalytics, logEvent } from '@firebase/analytics';
+import { connectAuthEmulator, getAuth } from '@firebase/auth';
+import { getFunctions, connectFunctionsEmulator } from '@firebase/functions';
+import { getStorage, connectStorageEmulator } from '@firebase/storage';
+import App from '@src/components/App';
 
 export const FirebaseContext = createContext<FirebaseApp | null>(null);
 
@@ -28,17 +31,26 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 logEvent(analytics, 'app started');
 
-const appCheck = initializeAppCheck(app, {
+initializeAppCheck(app, {
   provider: new ReCaptchaV3Provider('6LeJjokjAAAAAMlKkiNctcVueYJ-WvPZhlWvTn2a'),
   isTokenAutoRefreshEnabled: true,
 });
 
+// connect to the local emulators
+if (import.meta.env.MODE === 'development' || import.meta.env.dev) {
+  const region = 'us-west1';
+  const functions = getFunctions(app, region);
+  const storage = getStorage(app);
+  const auth = getAuth(app);
+  connectFunctionsEmulator(functions, '127.0.0.1', 5001);
+  connectAuthEmulator(auth, 'http://localhost:9099', { disableWarnings: true });
+  connectStorageEmulator(storage, '127.0.0.1', 9199);
+}
+
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <FirebaseContext.Provider value={app}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </FirebaseContext.Provider>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </React.StrictMode>,
 );

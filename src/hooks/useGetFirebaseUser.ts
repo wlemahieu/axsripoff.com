@@ -1,15 +1,20 @@
-import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
-import { useContext } from 'use-context-selector';
-import { FirebaseContext } from '@src/main';
-import { FirebaseApp } from '@firebase/app';
+import { getApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+import { onAuthStateChanged, User } from 'firebase/auth';
 import { useEffect, useState } from 'react';
 
-type ReturnT = User | null | undefined;
+interface UserExtended extends User {
+  reloadUserInfo?: {
+    screenName: string;
+  };
+}
+
+type ReturnT = UserExtended | null | undefined;
 
 const useGetFirebaseUser = (): ReturnT => {
-  const app = useContext(FirebaseContext);
-  const auth = getAuth(app as FirebaseApp);
-  const [user, setUser] = useState<User | null | undefined>();
+  const app = getApp();
+  const auth = getAuth(app);
+  const [user, setUser] = useState<User | UserExtended | null | undefined>();
 
   useEffect(() => {
     onAuthStateChanged(auth, (u) => (u ? setUser(u) : setUser(null)));

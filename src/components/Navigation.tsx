@@ -7,8 +7,8 @@ import styles from '@components/Navigation.module.css';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import useGetFirebaseUser from '@src/hooks/useGetFirebaseUser';
-import useGetFirebaseAuth from '@src/hooks/useGetFirebaseAuth';
-import { signOut } from 'firebase/auth';
+import { getAuth, signOut } from 'firebase/auth';
+import { getApp } from 'firebase/app';
 
 const defaultTab = 'complaints';
 
@@ -39,7 +39,8 @@ const Navigation: FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const user = useGetFirebaseUser();
-  const auth = useGetFirebaseAuth();
+  const app = getApp();
+  const auth = getAuth(app);
   const signOutAuth = () => signOut(auth);
 
   const [key, setKey] = useState<number | boolean>(0);
@@ -58,7 +59,7 @@ const Navigation: FC = () => {
     } else {
       setKey(false);
     }
-  }, [location.pathname]);
+  }, [location.pathname, user]);
 
   const handleChange = (event: React.SyntheticEvent) => {
     const target = event.target as HTMLElement;

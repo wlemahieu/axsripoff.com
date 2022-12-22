@@ -1,6 +1,7 @@
 /**
  * App structure, session fetch, socket listeners
  */
+import styles from './App.module.css';
 import { FC, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router';
 import Header from '@components/Header';
@@ -10,11 +11,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CookiesPopup from './CookiesPopup';
-import styles from './App.module.css';
-import { getApp } from 'firebase/app';
-import { getFunctions, connectFunctionsEmulator } from 'firebase/functions';
-import { connectAuthEmulator } from 'firebase/auth';
-import useGetFirebaseAuth from '@src/hooks/useGetFirebaseAuth';
 
 const theme = createTheme({
   typography: {
@@ -50,15 +46,6 @@ const theme = createTheme({
 const App: FC = () => {
   const ref = useRef<HTMLDivElement>(null);
   const location = useLocation();
-
-  // connect to the local firebase functions / auth emulators
-  if (import.meta.env.DEV) {
-    const region = 'us-west1';
-    const functions = getFunctions(getApp(), region);
-    connectFunctionsEmulator(functions, '127.0.0.1', 5001);
-    const auth = useGetFirebaseAuth();
-    connectAuthEmulator(auth, 'http://localhost:9099');
-  }
 
   useEffect(() => {
     if (ref.current) {

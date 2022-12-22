@@ -23,7 +23,7 @@ const SharePrompt: FC = () => {
         images to describe your situation. All submissions <b>will be reviewed</b> before being made live on the
         website.
       </Typography>
-      <Button variant="contained" color="primary" onClick={onStart}>
+      <Button variant="contained" color="primary" onClick={onStart} disabled>
         Start
       </Button>
     </Container>
