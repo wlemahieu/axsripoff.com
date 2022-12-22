@@ -6,16 +6,13 @@ import './index.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import { createContext } from 'use-context-selector';
-import { initializeApp, FirebaseApp } from '@firebase/app';
+import { initializeApp } from '@firebase/app';
 import { initializeAppCheck, ReCaptchaV3Provider } from '@firebase/app-check';
 import { getAnalytics, logEvent } from '@firebase/analytics';
 import { connectAuthEmulator, getAuth } from '@firebase/auth';
 import { getFunctions, connectFunctionsEmulator } from '@firebase/functions';
 import { getStorage, connectStorageEmulator } from '@firebase/storage';
 import App from '@src/components/App';
-
-export const FirebaseContext = createContext<FirebaseApp | null>(null);
 
 const firebaseConfig = {
   apiKey: 'AIzaSyD7M3lTsghsjLnNJw4_dy39qjDbvTjIoZg',

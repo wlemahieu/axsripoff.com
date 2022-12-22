@@ -3,20 +3,18 @@
  */
 import { FC } from 'react';
 import { useFormik } from 'formik';
-import { useContext } from 'use-context-selector';
-import styles from '@views/Contact.module.css';
+import { getFunctions, httpsCallable } from '@firebase/functions';
+import { FirebaseApp, getApp } from '@firebase/app';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { FirebaseApp } from 'firebase/app';
-import { getFunctions, httpsCallable } from 'firebase/functions';
-import { FirebaseContext } from '@src/main';
+import styles from '@views/Contact.module.css';
 
 type ValuesT = Record<string, string>;
 
 const Contact: FC = () => {
-  const app = useContext(FirebaseContext);
+  const app = getApp();
   const region = 'us-west1';
   const functions = getFunctions(app as FirebaseApp, region);
   const sendEmail = (values: ValuesT) => {
