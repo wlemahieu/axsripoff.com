@@ -11,6 +11,8 @@ import { initializeAppCheck, ReCaptchaV3Provider } from '@firebase/app-check';
 import { getAnalytics, logEvent } from '@firebase/analytics';
 import { connectAuthEmulator, getAuth } from '@firebase/auth';
 import { getFunctions, connectFunctionsEmulator } from '@firebase/functions';
+import { getFirestore, connectFirestoreEmulator } from '@firebase/firestore';
+
 import { getStorage, connectStorageEmulator } from '@firebase/storage';
 import App from '@src/components/App';
 
@@ -39,9 +41,11 @@ if (import.meta.env.MODE === 'development' || import.meta.env.dev) {
   const functions = getFunctions(app, region);
   const storage = getStorage(app);
   const auth = getAuth(app);
+  const db = getFirestore(app);
   connectFunctionsEmulator(functions, '127.0.0.1', 5001);
   connectAuthEmulator(auth, 'http://localhost:9099');
   connectStorageEmulator(storage, '127.0.0.1', 9199);
+  connectFirestoreEmulator(db, '127.0.0.1', 6060);
 }
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(

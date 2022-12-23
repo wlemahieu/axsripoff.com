@@ -15,7 +15,10 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import ImageUpload from './ImageUpload';
 import { getApp } from 'firebase/app';
 import { getStorage, ref, uploadBytes } from '@firebase/storage';
+import { doc, deleteDoc } from 'firebase/firestore';
 import useGetFirebaseUser from '@src/hooks/useGetFirebaseUser';
+import useGetFirestore from '@src/hooks/useGetFirestore';
+import { useNavigate } from 'react-router';
 
 type ValuesT = Record<string, string>;
 
@@ -23,10 +26,15 @@ const ShareForm: FC = () => {
   const files = useContextSelector(ShareContext, (c) => c.files);
   const setFiles = useContextSelector(ShareContext, (c) => c.setFiles);
   const setStarted = useContextSelector(ShareContext, (c) => c.setStarted);
+  const document = useContextSelector(ShareContext, (c) => c.document);
+
   const user = useGetFirebaseUser();
+  const db = useGetFirestore();
   const [showUpload, setShowUpload] = useState(false);
   const app = getApp();
   const storage = getStorage(app);
+  const navigate = useNavigate();
+  const uid = user?.uid as string;
 
   const onCancel = () => {
     setStarted(false);
@@ -47,26 +55,38 @@ const ShareForm: FC = () => {
     return errors;
   };
 
+  const onRemove = async () => {
+    try {
+      const docRef = doc(db, 'submissions', uid);
+      await deleteDoc(docRef);
+      navigate('/');
+    } catch (e) {
+      console.error('Error removing document: ', e);
+    }
+  };
+
+  console.log('document', document);
+
   const formik = useFormik({
     enableReinitialize: true,
-    initialValues: {
-      description: '',
-      name: user?.reloadUserInfo?.screenName || '',
-    },
+    initialValues: document as Record<string, string>,
     onSubmit: (values) => {
       try {
         console.log('values', values);
-        const hashName = md5(`${files[0].file.name}-${user?.uid}`);
-        const storageRef = ref(storage, `submissions/${hashName}`);
-        // sendEmail(values);
-        uploadBytes(storageRef, files[0].file)
-          .then((snapshot) => {
-            console.log('Uploaded a blob or file!', snapshot);
-          })
-          .catch((e) => console.log(e));
+        // deal with uploaded files
+        if (files?.length) {
+          const hashName = md5(`${files[0].file.name}-${user?.uid}`);
+          const storageRef = ref(storage, `submissions/${hashName}`);
+          // sendEmail(values);
+          uploadBytes(storageRef, files[0].file)
+            .then((snapshot) => {
+              console.log('Uploaded a blob or file!', snapshot);
+            })
+            .catch((e) => console.log(e));
+          setFiles([]);
+        }
 
         formik.resetForm();
-        setFiles([]);
       } catch (e) {
         console.log(e);
       }
@@ -134,6 +154,17 @@ const ShareForm: FC = () => {
             Submit
           </Button>
         </ButtonGroup>
+        <Button
+          variant="text"
+          onClick={onRemove}
+          style={{ marginTop: '4rem', fontSize: '10px', color: 'black' }}
+          disableRipple
+          disableTouchRipple
+          disableFocusRipple
+          disableElevation
+        >
+          Remove complaint
+        </Button>
       </form>
     </Container>
   );

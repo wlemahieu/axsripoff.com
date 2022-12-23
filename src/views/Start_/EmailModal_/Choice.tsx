@@ -11,9 +11,7 @@ const Choice: FC = () => {
 
   return (
     <>
-      <Typography id="modal-modal-title" variant="h6" component="h2">
-        Sign-in with email
-      </Typography>
+      <Typography variant="h6">Sign-in with email</Typography>
       <Button fullWidth variant="contained" color="primary" sx={{ marginBottom: '1rem' }} onClick={onCreate}>
         Create Account
       </Button>

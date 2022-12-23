@@ -3,7 +3,7 @@
  */
 import { Dispatch, FC, SetStateAction, useState } from 'react';
 import Modal from '@mui/material/Modal';
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { EmailContext } from './Email';
 import { Context, createContext, useContextSelector } from 'use-context-selector';
 import Choice from './EmailModal_/Choice';
@@ -39,16 +39,13 @@ const EmailModal: FC = () => {
   return (
     <EmailModalContext.Provider value={{ choice, setChoice }}>
       <Modal
+        component="div"
         open={true}
         onClose={onCancel}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            {!choice ? <Choice /> : choice === 'create' ? <CreateAccount /> : <EmailSignIn />}
-          </Typography>
-        </Box>
+        <Box sx={style}>{!choice ? <Choice /> : choice === 'create' ? <CreateAccount /> : <EmailSignIn />}</Box>
       </Modal>
     </EmailModalContext.Provider>
   );
