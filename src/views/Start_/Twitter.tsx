@@ -14,7 +14,6 @@ const TwitterLogin: FC = () => {
 
   return (
     <Button
-      disabled
       onClick={signIn}
       className={styles.btn}
       variant="text"
