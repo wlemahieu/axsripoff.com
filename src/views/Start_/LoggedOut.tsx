@@ -8,9 +8,7 @@ import GoogleLogin from './Google';
 import FacebookLogin from './Facebook';
 import TwitterLogin from './Twitter';
 import EmailLogin from './Email';
-import PhoneLogin from './Phone';
 import MicrosoftLogin from './Microsoft';
-import AppleLogin from './Apple';
 import { Typography } from '@mui/material';
 
 const LoggedOut: FC = () => {
@@ -21,12 +19,10 @@ const LoggedOut: FC = () => {
       </Typography>
       <div className={styles.root}>
         <EmailLogin />
-        <PhoneLogin />
         <GoogleLogin />
         <FacebookLogin />
         <TwitterLogin />
         <MicrosoftLogin />
-        <AppleLogin />
         <span>By continuing, you are indicating that you accept our Terms of Service and Privacy Policy.</span>
       </div>
     </Container>
