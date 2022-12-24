@@ -26,7 +26,14 @@ const PhoneLogin: FC = () => {
   };
 
   return (
-    <Button onClick={signIn} className={styles.btn} variant="text" size="small" disabled>
+    <Button
+      onClick={signIn}
+      className={styles.btn}
+      variant="text"
+      size="small"
+      disabled
+      style={{ backgroundColor: 'lightgrey' }}
+    >
       <Phone className={styles.icon} />
       <span>Sign in phone</span>
     </Button>

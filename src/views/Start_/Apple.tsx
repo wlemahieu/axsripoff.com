@@ -13,7 +13,14 @@ const AppleLogin: FC = () => {
   const signIn = () => signInWithPopup(auth, new OAuthProvider('apple.com'));
 
   return (
-    <Button disabled onClick={signIn} className={styles.btn} variant="text" size="small">
+    <Button
+      disabled
+      onClick={signIn}
+      className={styles.btn}
+      variant="text"
+      size="small"
+      style={{ backgroundColor: 'lightgrey' }}
+    >
       <img src={svg} className={styles.icon} alt="" />
       <span>Sign in with Apple</span>
     </Button>

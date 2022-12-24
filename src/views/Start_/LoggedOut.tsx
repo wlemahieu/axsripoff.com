@@ -7,7 +7,6 @@ import Container from '@mui/material/Container';
 import GoogleLogin from './Google';
 import FacebookLogin from './Facebook';
 import TwitterLogin from './Twitter';
-import GithubLogin from './Github';
 import EmailLogin from './Email';
 import PhoneLogin from './Phone';
 import MicrosoftLogin from './Microsoft';
@@ -22,11 +21,10 @@ const LoggedOut: FC = () => {
       </Typography>
       <div className={styles.root}>
         <EmailLogin />
+        <PhoneLogin />
         <GoogleLogin />
         <FacebookLogin />
         <TwitterLogin />
-        <GithubLogin />
-        <PhoneLogin />
         <MicrosoftLogin />
         <AppleLogin />
         <span>By continuing, you are indicating that you accept our Terms of Service and Privacy Policy.</span>
