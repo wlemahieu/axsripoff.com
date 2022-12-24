@@ -80,9 +80,9 @@ const Navigation: FC = () => {
 
   return (
     <nav className={styles.root}>
-      <Tabs value={key} onChange={handleChange} centered>
+      <Tabs value={key} onChange={handleChange} centered textColor="secondary" indicatorColor="secondary">
         {visibleTabs.map((tab, idx) => (
-          <Tab key={`key-${idx}`} label={tab.name} id={tab.name} value={idx} />
+          <Tab key={`key-${idx}`} label={tab.name} id={tab.name} value={idx} sx={{ color: '#fff' }} />
         ))}
       </Tabs>
     </nav>

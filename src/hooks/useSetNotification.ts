@@ -1,4 +1,5 @@
-import { GlobalContext, NotificationI } from '@src/components/App';
+import { NotificationI } from '@src/components/Notification';
+import { GlobalContext } from '@src/components/Providers';
 import { useContextSelector } from 'use-context-selector';
 
 const useSetNotification = () => {

@@ -21,9 +21,12 @@ import useGetFirestore from '@src/hooks/useGetFirestore';
 import { useNavigate } from 'react-router';
 import useSetMySubmission from '@src/hooks/useSetMySubmission';
 import { FileValidated, createSyntheticFile, makeSynthticFileValidate, UPLOADSTATUS } from '@dropzone-ui/react';
-import { FileValidatedE } from '@src/components/App';
 import { Modal } from '@mui/material';
 import useSetNotification from '@src/hooks/useSetNotification';
+
+interface FileValidatedE extends FileValidated {
+  imageUrl?: string;
+}
 
 const modalStyle = {
   position: 'absolute' as const,

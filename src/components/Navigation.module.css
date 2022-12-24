@@ -1,7 +1,7 @@
 .root {
   text-align: center;
-  margin-top: 2rem;
-  margin-bottom: 3rem;
+  margin: 0 auto;
+  
 }
 
 .list {
@@ -13,4 +13,5 @@
 
 .list > li {
   margin-right: 1rem;
+
 }

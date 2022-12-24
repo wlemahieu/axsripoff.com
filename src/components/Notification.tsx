@@ -1,8 +1,15 @@
-import { Alert, AlertColor, AlertTitle, Snackbar } from '@mui/material';
 import { FC } from 'react';
-import { GlobalContext, NotificationI } from '@src/components/App';
 import { useContextSelector } from 'use-context-selector';
+import { Alert, AlertColor, AlertTitle, Snackbar } from '@mui/material';
 import useSetNotification from '@src/hooks/useSetNotification';
+import { GlobalContext } from '@components/Providers';
+
+export interface NotificationI {
+  title?: string;
+  message?: string;
+  severity?: string;
+  open?: boolean;
+}
 
 const Notification: FC = () => {
   const notification = useContextSelector(GlobalContext, (c) => c?.state?.notification) as NotificationI;

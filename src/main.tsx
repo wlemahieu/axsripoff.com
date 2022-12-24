@@ -12,9 +12,8 @@ import { getAnalytics, logEvent } from '@firebase/analytics';
 import { connectAuthEmulator, getAuth } from '@firebase/auth';
 import { getFunctions, connectFunctionsEmulator } from '@firebase/functions';
 import { getFirestore, connectFirestoreEmulator } from '@firebase/firestore';
-
 import { getStorage, connectStorageEmulator } from '@firebase/storage';
-import App from '@src/components/App';
+import Providers from '@src/components/Providers';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyD7M3lTsghsjLnNJw4_dy39qjDbvTjIoZg',
@@ -51,7 +50,7 @@ if (import.meta.env.MODE === 'development' || import.meta.env.dev) {
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <Providers />
     </BrowserRouter>
   </React.StrictMode>,
 );

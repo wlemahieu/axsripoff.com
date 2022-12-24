@@ -11,7 +11,7 @@ import Cookies from '@src/views/Cookies';
 import Contact from '@views/Contact';
 import Start from '@src/views/Start';
 import Share from '@views/Share';
-
+import Verify from '@src/views/Verify';
 import useGetFirebaseUser from '@src/hooks/useGetFirebaseUser';
 
 const Routes: FC = () => {
@@ -32,6 +32,7 @@ const Routes: FC = () => {
       <Route path="/privacy" element={<Privacy />} />
       <Route path="/cookies" element={<Cookies />} />
       <Route path="/contact" element={<Contact />} />
+      <Route path="/verify" element={<Verify />} />
       {!user ? <Route path="/start" element={<Start />} /> : null}
       {user ? <Route path="/share" element={<Share />} /> : null}
     </RouteSwitch>

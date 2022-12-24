@@ -3,8 +3,8 @@
 }
 
 .logo {
-  height: 33vmin !important;
-  width: 33vmin !important;
+  height: 7vmin !important;
+  width: 7vmin !important;
   pointer-events: none;
   margin: 0 auto;
 }
