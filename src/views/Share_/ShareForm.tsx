@@ -1,56 +1,104 @@
 /**
  * ShareForm component
  */
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useContextSelector } from 'use-context-selector';
 import { useFormik } from 'formik';
 import md5 from 'md5';
 import styles from '@views/Share_/ShareForm.module.css';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { ShareContext } from '@views/Share';
+import { ShareContext, State } from '@views/Share';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import ImageUpload from './ImageUpload';
 import { getApp } from 'firebase/app';
-import { getStorage, ref, uploadBytes } from '@firebase/storage';
-import { doc, deleteDoc } from 'firebase/firestore';
+import { getStorage, ref, getDownloadURL, StorageReference, getMetadata, FullMetadata } from '@firebase/storage';
+import { doc, deleteDoc, DocumentData } from 'firebase/firestore';
 import useGetFirebaseUser from '@src/hooks/useGetFirebaseUser';
 import useGetFirestore from '@src/hooks/useGetFirestore';
 import { useNavigate } from 'react-router';
+import useSetMySubmission from '@src/hooks/useSetMySubmission';
+import { FileValidated, createSyntheticFile, makeSynthticFileValidate, UPLOADSTATUS } from '@dropzone-ui/react';
+import { FileValidatedE } from '@src/components/App';
+import { Modal } from '@mui/material';
+
+const modalStyle = {
+  position: 'absolute' as const,
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 
 type ValuesT = Record<string, string>;
 
 const ShareForm: FC = () => {
   const files = useContextSelector(ShareContext, (c) => c.files);
   const setFiles = useContextSelector(ShareContext, (c) => c.setFiles);
-  const setStarted = useContextSelector(ShareContext, (c) => c.setStarted);
+  const state = useContextSelector(ShareContext, (c) => c.state);
+  const setState = useContextSelector(ShareContext, (c) => c.setState);
   const document = useContextSelector(ShareContext, (c) => c.document);
+  const [isPreview, setIsPreview] = useState(false);
 
   const user = useGetFirebaseUser();
+  const uid = user?.uid as string;
   const db = useGetFirestore();
-  const [showUpload, setShowUpload] = useState(false);
   const app = getApp();
   const storage = getStorage(app);
   const navigate = useNavigate();
-  const uid = user?.uid as string;
+  const setDocument = useSetMySubmission();
+
+  useEffect(() => {
+    (async () => {
+      if (document) {
+        const d = document as DocumentData;
+        if (d.images.length) {
+          // get file references
+          const references = d.images.map((fileName: string) => {
+            return ref(storage, `submissions/${fileName}`);
+          });
+          // get file urls and metadata
+          const urlData = await Promise.all(
+            references.map((ref: StorageReference) => {
+              return Promise.all([getDownloadURL(ref), getMetadata(ref)]);
+            }),
+          );
+          // create synthetic files from already uploaded files
+          const syntheticFiles = urlData.map(([url, metadata]: [string, FullMetadata]) => {
+            const fileFromCDNUrl = createSyntheticFile(metadata.name, metadata.size, metadata.contentType);
+            const validateFileFromCDNUrl = makeSynthticFileValidate(
+              fileFromCDNUrl,
+              true,
+              'success' as UPLOADSTATUS,
+              undefined,
+            ) as FileValidatedE;
+            validateFileFromCDNUrl.imageUrl = url;
+            return validateFileFromCDNUrl;
+          });
+          setFiles(syntheticFiles);
+        }
+      }
+    })();
+  }, [document]);
 
   const onCancel = () => {
-    setStarted(false);
-    //clear form
+    setState(State.Void);
+    formik.resetForm();
   };
-
-  const onShowUpload = () => setShowUpload(true);
 
   const validate = (values: Record<string, string>) => {
     const errors: ValuesT = {};
-    const { description, name } = values;
-    if (!description?.length) {
-      errors.description = 'No description entered';
+    const { complaint, displayName } = values;
+    if (!complaint?.length) {
+      errors.complaint = 'No complaint entered';
     }
-    if (!name?.length) {
-      errors.name = 'No name entered';
+    if (!displayName?.length) {
+      errors.displayName = 'No display name entered';
     }
     return errors;
   };
@@ -65,108 +113,122 @@ const ShareForm: FC = () => {
     }
   };
 
-  console.log('document', document);
+  const onSubmit = (values: Record<string, string>) => {
+    if (isPreview) {
+      // for future
+      setIsPreview(true);
+    } else {
+      // actually submitting
+      try {
+        // deal with uploaded files
+        if (files?.length) {
+          // create a map of file names
+          const hashMap = files.map((f: unknown) => {
+            const file = f as FileValidated;
+            const hashName = md5(`${file.file.name}-${user?.uid}`);
+            return hashName;
+          });
+          // update firebase document
+          setDocument({
+            ...values,
+            images: hashMap,
+            state: State.Submitted,
+          });
+          setState(State.Submitted);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  };
 
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: document as Record<string, string>,
-    onSubmit: (values) => {
-      try {
-        console.log('values', values);
-        // deal with uploaded files
-        if (files?.length) {
-          const hashName = md5(`${files[0].file.name}-${user?.uid}`);
-          const storageRef = ref(storage, `submissions/${hashName}`);
-          // sendEmail(values);
-          uploadBytes(storageRef, files[0].file)
-            .then((snapshot) => {
-              console.log('Uploaded a blob or file!', snapshot);
-            })
-            .catch((e) => console.log(e));
-          setFiles([]);
-        }
-
-        formik.resetForm();
-      } catch (e) {
-        console.log(e);
-      }
-    },
+    onSubmit,
     validate,
   });
 
   return (
-    <Container maxWidth="sm" className={styles.root}>
-      <Typography variant="h6" gutterBottom>
-        Creating a free complaint
-      </Typography>
+    <>
+      <Modal
+        component="div"
+        open={false}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Container maxWidth="md" sx={modalStyle}>
+          PREVIEW BOX
+        </Container>
+      </Modal>
+      <Container maxWidth="sm" className={styles.root}>
+        <Typography variant="h5" gutterBottom>
+          {state === State.Created ? 'Creating' : 'Editing'} free complaint
+        </Typography>
 
-      <form onSubmit={formik.handleSubmit}>
-        <TextField
-          fullWidth
-          id="name"
-          name="name"
-          label="Display Name"
-          variant="filled"
-          value={formik.values.name}
-          onChange={formik.handleChange}
-          error={!!formik.errors.name && formik.touched.name}
-          helperText={formik.touched.name && formik.errors.name}
-          required
-        />
-        <TextField
-          multiline
-          minRows={5}
-          maxRows={50}
-          fullWidth
-          id="description"
-          name="description"
-          label="Description of the issue"
-          variant="filled"
-          value={formik.values.description}
-          onChange={formik.handleChange}
-          error={!!formik.errors.description && formik.touched.description}
-          helperText={formik.touched.description && formik.errors.description}
-          required
-        />
-        <Button fullWidth variant="contained" color="info" onClick={onShowUpload}>
-          Upload Images (optional)
-        </Button>
-
-        {showUpload ? (
-          <>
-            <Typography variant="h6" gutterBottom style={{ marginTop: '1rem' }}>
-              Share up to 6 images (optional)
-            </Typography>
-            <ImageUpload />
-          </>
-        ) : null}
-        <ButtonGroup fullWidth className={styles.actions}>
-          <Button variant="contained" color="warning" onClick={onCancel}>
-            Cancel
-          </Button>
-          <Button
+        <form onSubmit={formik.handleSubmit}>
+          <TextField
             fullWidth
-            color="primary"
-            variant="contained"
-            type="submit"
-            disabled={!formik.isValid || !formik.dirty}
+            id="displayName"
+            name="displayName"
+            label="Display Name"
+            variant="filled"
+            value={formik.values.displayName}
+            onChange={formik.handleChange}
+            error={!!formik.errors.displayName && formik.touched.displayName}
+            helperText={formik.touched.displayName && formik.errors.displayName}
+            required
+          />
+          <TextField
+            multiline
+            minRows={5}
+            maxRows={50}
+            fullWidth
+            id="complaint"
+            name="complaint"
+            label="Description of the complaint"
+            variant="filled"
+            value={formik.values.complaint}
+            onChange={formik.handleChange}
+            error={!!formik.errors.complaint && formik.touched.complaint}
+            helperText={formik.touched.complaint && formik.errors.complaint}
+            required
+          />
+
+          <Typography variant="h6" gutterBottom style={{ marginTop: '1rem' }}>
+            Share up to 6 images (optional)
+          </Typography>
+          <ImageUpload />
+
+          <ButtonGroup fullWidth className={styles.actions}>
+            <Button variant="contained" color="warning" onClick={onCancel}>
+              Cancel
+            </Button>
+            <Button
+              fullWidth
+              color="primary"
+              variant="contained"
+              type="submit"
+              disabled={!formik.isValid || !formik.dirty}
+            >
+              Submit
+            </Button>
+          </ButtonGroup>
+
+          <Button
+            variant="text"
+            onClick={onRemove}
+            style={{ marginTop: '4rem', fontSize: '10px', color: 'black' }}
+            disableRipple
+            disableTouchRipple
+            disableFocusRipple
+            disableElevation
           >
-            Submit
+            Remove complaint
           </Button>
-        </ButtonGroup>
-        <Button
-          variant="text"
-          onClick={onRemove}
-          style={{ marginTop: '4rem', fontSize: '10px', color: 'black' }}
-          disableRipple
-          disableTouchRipple
-          disableFocusRipple
-          disableElevation
-        >
-          Remove complaint
-        </Button>
-      </form>
-    </Container>
+        </form>
+      </Container>
+    </>
   );
 };
 

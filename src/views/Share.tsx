@@ -2,64 +2,94 @@
  * Share page view
  */
 import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
-import { doc, getDoc, DocumentData } from 'firebase/firestore';
+import { useContextSelector } from 'use-context-selector';
+import { DocumentData } from 'firebase/firestore';
 import { createContext, Context } from 'use-context-selector';
 import styles from '@views/Share.module.css';
 import SharePrompt from './Share_/SharePrompt';
 import ShareForm from './Share_/ShareForm';
 import { FileValidated } from '@dropzone-ui/react';
-import useGetFirestore from '@src/hooks/useGetFirestore';
 import useGetFirebaseUser from '@src/hooks/useGetFirebaseUser';
+import useGetMySubmission from '@src/hooks/useGetMySubmission';
+import FormSubmitted from './Share_/FormSubmitted';
+import { CircularProgress } from '@mui/material';
+import SubmissionApproved from './Share_/SubmissionApproved';
 
 export type DocumentT = undefined | DocumentData | boolean;
 
+type FileT = Array<FileValidated | string>;
+
+export enum State {
+  Void = 'Void', // document not started yet
+  Created = 'Created', // initial state
+  Submitted = 'Submitted', // author submitted
+  Editing = 'Editing', // author editing
+  Approved = 'Approved', // approved, made public
+  Rejected = 'Rejected', // rejected
+  Removed = 'Removed', // author action
+  Destroyed = 'Destroyed', // admin action
+}
+
 export interface ShareI {
-  started: boolean;
-  setStarted: Dispatch<SetStateAction<boolean>>;
-  files: FileValidated[];
-  setFiles: Dispatch<SetStateAction<FileValidated[]>>;
+  state: State;
+  setState: Dispatch<SetStateAction<State>>;
+  files: FileT;
+  setFiles: Dispatch<SetStateAction<FileT>>;
   document: DocumentT;
+  setDocument: Dispatch<SetStateAction<DocumentT>>;
 }
 
 export const ShareContext = createContext<ShareI | null>(null) as Context<ShareI>;
 
-const Share: FC = () => {
-  const [started, setStarted] = useState(false);
-  const [files, setFiles] = useState<any>([]);
-  const db = useGetFirestore();
-  const user = useGetFirebaseUser();
+const ShareProvider: FC = () => {
+  const [state, setState] = useState(State.Void);
+  const [files, setFiles] = useState<FileT>([]);
   const [document, setDocument] = useState<DocumentT>();
+
+  return (
+    <ShareContext.Provider value={{ state, setState, files, setFiles, document, setDocument }}>
+      <Share />
+    </ShareContext.Provider>
+  );
+};
+
+const Share: FC = () => {
+  const user = useGetFirebaseUser();
+  const [loadingGetSubmission, getSubmission] = useGetMySubmission();
+  const document = useContextSelector(ShareContext, (c) => c.document);
+  const setState = useContextSelector(ShareContext, (c) => c.setState);
+  const state = useContextSelector(ShareContext, (c) => c.state);
+
   const uid = user?.uid as string;
 
   // essentially a mount that waits for uid to be set.
   useEffect(() => {
     if (uid && document === undefined) {
-      (async () => {
-        const myDocument = await findDocument();
-        setDocument(myDocument);
-      })();
+      getSubmission();
     }
   }, [uid]);
 
-  const findDocument = async () => {
-    try {
-      const docRef = doc(db, 'submissions', uid);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        return docSnap.data();
-      } else {
-        return false;
-      }
-    } catch (e) {
-      console.error('Error getting document: ', e);
+  useEffect(() => {
+    if (document) {
+      setState((document as DocumentData).state);
+    }
+  }, [document]);
+
+  const renderSwitch = () => {
+    switch (state) {
+      case State.Void:
+        return <SharePrompt />;
+      case State.Created:
+      case State.Editing:
+        return <ShareForm />;
+      case State.Submitted:
+        return <FormSubmitted />;
+      case State.Approved:
+        return <SubmissionApproved />;
     }
   };
 
-  return (
-    <ShareContext.Provider value={{ started, setStarted, files, setFiles, document }}>
-      <div className={styles.root}>{!started ? <SharePrompt /> : <ShareForm />}</div>
-    </ShareContext.Provider>
-  );
+  return <div className={styles.root}>{loadingGetSubmission ? <CircularProgress /> : renderSwitch()}</div>;
 };
 
-export default Share;
+export default ShareProvider;

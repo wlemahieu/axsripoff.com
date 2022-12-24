@@ -11,6 +11,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CookiesPopup from './CookiesPopup';
+import { FileValidated } from '@dropzone-ui/react';
 
 const theme = createTheme({
   typography: {
@@ -42,6 +43,10 @@ const theme = createTheme({
     },
   },
 });
+
+export interface FileValidatedE extends FileValidated {
+  imageUrl?: string;
+}
 
 const App: FC = () => {
   const ref = useRef<HTMLDivElement>(null);

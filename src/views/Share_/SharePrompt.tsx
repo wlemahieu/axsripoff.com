@@ -3,41 +3,30 @@
  */
 import { FC } from 'react';
 import { useContextSelector } from 'use-context-selector';
-import { doc, setDoc } from 'firebase/firestore';
 import styles from '@views/Share.module.css';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import CircularProgress from '@mui/material/CircularProgress';
 import { Button } from '@mui/material';
-import { ShareContext } from '@views/Share';
-import useGetFirestore from '@src/hooks/useGetFirestore';
-import useGetFirebaseUser from '@src/hooks/useGetFirebaseUser';
+import { ShareContext, State } from '@views/Share';
+import useSetMySubmission from '@src/hooks/useSetMySubmission';
 
 const SharePrompt: FC = () => {
   const document = useContextSelector(ShareContext, (c) => c.document);
-  const setStarted = useContextSelector(ShareContext, (c) => c.setStarted);
-  const db = useGetFirestore();
-  const user = useGetFirebaseUser();
-  const uid = user?.uid as string;
-
-  const addDocument = async () => {
-    try {
-      const docRef = await setDoc(doc(db, 'submissions', uid), {
-        displayName: '',
-        complaint: '',
-        images: false,
-      });
-      return docRef;
-    } catch (e) {
-      console.error('Error adding document: ', e);
-    }
-  };
+  const setState = useContextSelector(ShareContext, (c) => c.setState);
+  const setDocument = useSetMySubmission();
 
   const onStart = async () => {
-    setStarted(true);
+    return false;
     if (!document) {
-      addDocument();
+      await setDocument({
+        displayName: '',
+        complaint: '',
+        images: [],
+        state: State.Created,
+      });
     }
+    setState(State.Created);
   };
 
   return (
