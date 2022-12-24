@@ -1,22 +1,21 @@
 import { useContextSelector } from 'use-context-selector';
 import { doc, setDoc } from 'firebase/firestore';
 import useGetFirestore from '@src/hooks/useGetFirestore';
-import useGetFirebaseUser from '@src/hooks/useGetFirebaseUser';
 import { ShareContext, State } from '@views/Share';
+import useGetFirebaseUID from './useGetFirebaseUID';
 
 export interface SubmissionI {
-  uid: string;
+  email?: string;
   displayName?: string;
   complaint?: string;
   images?: Array<string>;
-  state: State;
+  state?: State;
   unsubmitCount?: number;
 }
 
 const useSetMySubmission = () => {
   const db = useGetFirestore();
-  const user = useGetFirebaseUser();
-  const uid = user?.uid as string;
+  const uid = useGetFirebaseUID();
   const setStateDocument = useContextSelector(ShareContext, (c) => c?.setDocument);
 
   const setDocument = async (data: SubmissionI) => {

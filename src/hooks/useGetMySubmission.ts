@@ -2,16 +2,15 @@ import { useState } from 'react';
 import { useContextSelector } from 'use-context-selector';
 import { doc, getDoc } from 'firebase/firestore';
 import useGetFirestore from '@src/hooks/useGetFirestore';
-import useGetFirebaseUser from '@src/hooks/useGetFirebaseUser';
 import { ShareContext } from '@views/Share';
+import useGetFirebaseUID from './useGetFirebaseUID';
 
 type GetDocumentT = () => void;
 
 const useGetMySubmission = (): [boolean, GetDocumentT] => {
   const [loading, setLoading] = useState(false);
   const db = useGetFirestore();
-  const user = useGetFirebaseUser();
-  const uid = user?.uid as string;
+  const uid = useGetFirebaseUID();
   const setDocument = useContextSelector(ShareContext, (c) => c?.setDocument);
 
   const getDocument: GetDocumentT = async () => {

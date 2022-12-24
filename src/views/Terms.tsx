@@ -92,6 +92,18 @@ const Terms: FC = () => {
             entity on behalf of which such individual is accessing or using the Service, as applicable.
           </Typography>
         </li>
+        <li>
+          <Typography variant="body2">
+            <strong>AXSRipoff</strong> / <strong>Ripoff</strong> is an opinionated &amp; subjective term that Website or
+            You or User Accounts may use to describe their feelings regarding a particular company's business practices.
+          </Typography>
+        </li>
+        <li>
+          <Typography variant="body2">
+            <strong>Complaint</strong> refers to a collection of written thoughts and/or images that Website or You or
+            User Accounts may use to reasonably describe an experience they had when dealing with a particular company.
+          </Typography>
+        </li>
       </ul>
       <Typography variant="h2">Acknowledgment</Typography>
       <Typography variant="body2">

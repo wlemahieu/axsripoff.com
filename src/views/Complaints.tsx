@@ -1,15 +1,16 @@
 /**
- * Default home page view
+ * Default complaints page view
  */
 import { FC } from 'react';
-import styles from '@views/Home.module.css';
+import styles from '@views/Complaints.module.css';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router';
 import useGetFirebaseUser from '@src/hooks/useGetFirebaseUser';
+import PublicSubmissions from '@views/Home_/PublicSubmissions';
 
-const Home: FC = () => {
+const Complaints: FC = () => {
   const navigate = useNavigate();
   const user = useGetFirebaseUser();
 
@@ -22,15 +23,16 @@ const Home: FC = () => {
   };
 
   return (
-    <Container maxWidth="xs" className={styles.root}>
+    <Container maxWidth="sm" className={styles.root}>
       <Typography variant="h4" gutterBottom>
         Complaints
       </Typography>
       <Button variant="contained" color="primary" onClick={onClick}>
         Share your complaint
       </Button>
+      <PublicSubmissions />
     </Container>
   );
 };
 
-export default Home;
+export default Complaints;

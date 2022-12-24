@@ -1,10 +1,8 @@
 import useGetFirebaseUser from './useGetFirebaseUser';
 
-type ReturnT = string | undefined;
-
-const useGetFirebaseUID = (): ReturnT => {
+const useGetFirebaseUID = (): string => {
   const user = useGetFirebaseUser();
-  return user?.uid;
+  return user?.uid as string;
 };
 
 export default useGetFirebaseUID;

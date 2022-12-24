@@ -24,6 +24,10 @@ export const tabs: TabsT = [
     isPublic: true,
   },
   {
+    name: 'problems',
+    isPublic: true,
+  },
+  {
     name: 'about',
     isPublic: true,
   },

@@ -9,13 +9,12 @@ import styles from '@views/Share.module.css';
 import SharePrompt from './Share_/SharePrompt';
 import ShareForm from './Share_/ShareForm';
 import { FileValidated } from '@dropzone-ui/react';
-import useGetFirebaseUser from '@src/hooks/useGetFirebaseUser';
 import useGetMySubmission from '@src/hooks/useGetMySubmission';
 import FormSubmitted from './Share_/FormSubmitted';
 import { CircularProgress } from '@mui/material';
 import SubmissionApproved from './Share_/SubmissionApproved';
-
-export type DocumentT = undefined | DocumentData | boolean;
+import useGetFirebaseUID from '@src/hooks/useGetFirebaseUID';
+import { SubmissionI } from '@src/hooks/useSetMySubmission';
 
 export type FileT = Array<FileValidated | string>;
 
@@ -35,8 +34,8 @@ export interface ShareI {
   setState: Dispatch<SetStateAction<State>>;
   files: FileT;
   setFiles: Dispatch<SetStateAction<FileT>>;
-  document: DocumentT;
-  setDocument: Dispatch<SetStateAction<DocumentT>>;
+  document: SubmissionI | undefined;
+  setDocument: Dispatch<SetStateAction<SubmissionI | undefined>>;
 }
 
 export const ShareContext = createContext<ShareI | null>(null) as Context<ShareI>;
@@ -44,7 +43,7 @@ export const ShareContext = createContext<ShareI | null>(null) as Context<ShareI
 const ShareProvider: FC = () => {
   const [state, setState] = useState(State.Void);
   const [files, setFiles] = useState<FileT>([]);
-  const [document, setDocument] = useState<DocumentT>();
+  const [document, setDocument] = useState<SubmissionI>();
 
   return (
     <ShareContext.Provider value={{ state, setState, files, setFiles, document, setDocument }}>
@@ -54,13 +53,11 @@ const ShareProvider: FC = () => {
 };
 
 const Share: FC = () => {
-  const user = useGetFirebaseUser();
+  const uid = useGetFirebaseUID();
   const [loadingGetSubmission, getSubmission] = useGetMySubmission();
   const document = useContextSelector(ShareContext, (c) => c.document);
   const setState = useContextSelector(ShareContext, (c) => c.setState);
   const state = useContextSelector(ShareContext, (c) => c.state);
-
-  const uid = user?.uid as string;
 
   // essentially a mount that waits for uid to be set.
   useEffect(() => {

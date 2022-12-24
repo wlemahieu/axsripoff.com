@@ -16,13 +16,13 @@ import ImageUpload from './ImageUpload';
 import { getApp } from 'firebase/app';
 import { getStorage, ref, getDownloadURL, StorageReference, getMetadata, FullMetadata } from '@firebase/storage';
 import { doc, deleteDoc, DocumentData } from 'firebase/firestore';
-import useGetFirebaseUser from '@src/hooks/useGetFirebaseUser';
 import useGetFirestore from '@src/hooks/useGetFirestore';
 import { useNavigate } from 'react-router';
 import useSetMySubmission from '@src/hooks/useSetMySubmission';
 import { FileValidated, createSyntheticFile, makeSynthticFileValidate, UPLOADSTATUS } from '@dropzone-ui/react';
 import { Modal } from '@mui/material';
 import useSetNotification from '@src/hooks/useSetNotification';
+import useGetFirebaseUID from '@src/hooks/useGetFirebaseUID';
 
 interface FileValidatedE extends FileValidated {
   imageUrl?: string;
@@ -48,8 +48,7 @@ const ShareForm: FC = () => {
   const document = useContextSelector(ShareContext, (c) => c.document);
   const [isPreview, setIsPreview] = useState(false);
 
-  const user = useGetFirebaseUser();
-  const uid = user?.uid as string;
+  const uid = useGetFirebaseUID();
   const db = useGetFirestore();
   const app = getApp();
   const storage = getStorage(app);
@@ -129,7 +128,7 @@ const ShareForm: FC = () => {
           // create a map of file names
           const hashMap = files.map((f: unknown) => {
             const file = f as FileValidated;
-            const hashName = md5(`${file.file.name}-${user?.uid}`);
+            const hashName = md5(`${file.file.name}-${uid}`);
             return hashName;
           });
           const doc = document as DocumentData;

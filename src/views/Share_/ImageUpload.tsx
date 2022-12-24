@@ -8,15 +8,14 @@ import { ShareContext } from '@views/Share';
 import md5 from 'md5';
 import { getStorage, ref, uploadBytes, deleteObject, getMetadata } from '@firebase/storage';
 import { getApp } from '@firebase/app';
-import useGetFirebaseUser from '@src/hooks/useGetFirebaseUser';
+import useGetFirebaseUID from '@src/hooks/useGetFirebaseUID';
 
 const ImageUpload: FC = () => {
   const files = useContextSelector(ShareContext, (c) => c.files);
   const setFiles = useContextSelector(ShareContext, (c) => c.setFiles);
   const app = getApp();
   const storage = getStorage(app);
-  const user = useGetFirebaseUser();
-  const uid = user?.uid as string;
+  const uid = useGetFirebaseUID();
 
   const onDrop = (files: FileValidated[]) => {
     files.map((f: unknown) => {
