@@ -10,7 +10,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { Button } from '@mui/material';
 import { ShareContext, State } from '@views/Share';
 import useSetMySubmission from '@src/hooks/useSetMySubmission';
-import useGetFirebaseUID from '@src/hooks/useGetFirebaseUid';
+import useGetFirebaseUID from '@src/hooks/useGetFirebaseUID';
 
 const SharePrompt: FC = () => {
   const document = useContextSelector(ShareContext, (c) => c.document);
