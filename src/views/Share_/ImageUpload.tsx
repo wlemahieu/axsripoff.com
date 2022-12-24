@@ -63,7 +63,6 @@ const ImageUpload: FC = () => {
       >
         {files.length > 0 &&
           files.map((file: any) => {
-            console.log('file', file);
             return (
               <FileItem
                 {...file}

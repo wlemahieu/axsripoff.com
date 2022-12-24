@@ -12,7 +12,8 @@ const FormSubmitted: FC = () => {
   const onUndo = async () => {
     try {
       if (document) {
-        await setDocument({ ...(document as DocumentData), state: State.Editing });
+        const doc = document as DocumentData;
+        await setDocument({ ...doc, state: State.Editing, unsubmitCount: (doc.unsubmitCount += 1) });
       }
     } catch (e) {
       console.error('Error undoing submission: ', e);

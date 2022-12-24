@@ -9,12 +9,14 @@ import { EmailModalContext } from '../EmailModal';
 import styles from './CreateAccount.module.css';
 import useGetFirebaseAuth from '@src/hooks/useGetFirebaseAuth';
 import { createUserWithEmailAndPassword } from '@firebase/auth';
+import useSetNotification from '@src/hooks/useSetNotification';
 
 type ValuesT = Record<string, string>;
 
 const CreateAccount: FC = () => {
   const setChoice = useContextSelector(EmailModalContext, (c) => c?.setChoice);
   const auth = useGetFirebaseAuth();
+  const setNotification = useSetNotification();
 
   const validate = (values: Record<string, string>) => {
     const errors: ValuesT = {};
@@ -39,7 +41,28 @@ const CreateAccount: FC = () => {
     },
     onSubmit: (values) => {
       const { email, password } = values;
-      createUserWithEmailAndPassword(auth, email, password);
+      (async () => {
+        try {
+          await createUserWithEmailAndPassword(auth, email, password);
+        } catch (e: unknown) {
+          const err = e as Record<string, string>;
+          if (err.message.includes('email-already-in-use')) {
+            setNotification({
+              title: 'Cannot sign up',
+              message: 'That email is already used',
+              severity: 'error',
+              open: true,
+            });
+          } else {
+            setNotification({
+              title: 'Cannot sign up',
+              message: 'Invalid username / password',
+              severity: 'error',
+              open: true,
+            });
+          }
+        }
+      })();
     },
     validate,
   });

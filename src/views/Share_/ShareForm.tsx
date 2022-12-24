@@ -23,6 +23,7 @@ import useSetMySubmission from '@src/hooks/useSetMySubmission';
 import { FileValidated, createSyntheticFile, makeSynthticFileValidate, UPLOADSTATUS } from '@dropzone-ui/react';
 import { FileValidatedE } from '@src/components/App';
 import { Modal } from '@mui/material';
+import useSetNotification from '@src/hooks/useSetNotification';
 
 const modalStyle = {
   position: 'absolute' as const,
@@ -52,6 +53,7 @@ const ShareForm: FC = () => {
   const storage = getStorage(app);
   const navigate = useNavigate();
   const setDocument = useSetMySubmission();
+  const setNotification = useSetNotification();
 
   useEffect(() => {
     (async () => {
@@ -128,13 +130,23 @@ const ShareForm: FC = () => {
             const hashName = md5(`${file.file.name}-${user?.uid}`);
             return hashName;
           });
-          // update firebase document
-          setDocument({
-            ...values,
-            images: hashMap,
-            state: State.Submitted,
-          });
-          setState(State.Submitted);
+          const doc = document as DocumentData;
+          if (doc.unsubmitCount >= 5) {
+            setNotification({
+              title: 'Cannot submit again',
+              message: 'Too many unsubmits - please contact support!',
+              severity: 'error',
+              open: true,
+            });
+          } else {
+            // update firebase document
+            setDocument({
+              ...values,
+              images: hashMap,
+              state: State.Submitted,
+            });
+            setState(State.Submitted);
+          }
         }
       } catch (e) {
         console.log(e);
@@ -204,13 +216,7 @@ const ShareForm: FC = () => {
             <Button variant="contained" color="warning" onClick={onCancel}>
               Cancel
             </Button>
-            <Button
-              fullWidth
-              color="primary"
-              variant="contained"
-              type="submit"
-              disabled={!formik.isValid || !formik.dirty}
-            >
+            <Button fullWidth color="primary" variant="contained" type="submit" disabled={!formik.isValid}>
               Submit
             </Button>
           </ButtonGroup>

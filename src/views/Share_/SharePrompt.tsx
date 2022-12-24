@@ -17,13 +17,13 @@ const SharePrompt: FC = () => {
   const setDocument = useSetMySubmission();
 
   const onStart = async () => {
-    return false;
     if (!document) {
       await setDocument({
         displayName: '',
         complaint: '',
         images: [],
         state: State.Created,
+        unsubmitCount: 0,
       });
     }
     setState(State.Created);

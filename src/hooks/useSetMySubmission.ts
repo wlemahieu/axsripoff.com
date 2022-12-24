@@ -9,6 +9,7 @@ export interface SubmissionI {
   complaint?: string;
   images?: Array<string>;
   state: State;
+  unsubmitCount?: number;
 }
 
 const useSetMySubmission = () => {
