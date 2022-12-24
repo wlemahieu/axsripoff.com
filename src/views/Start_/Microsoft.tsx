@@ -13,14 +13,7 @@ const MicrosoftLogin: FC = () => {
   const signIn = () => signInWithPopup(auth, new OAuthProvider('microsoft.com'));
 
   return (
-    <Button
-      disabled
-      onClick={signIn}
-      className={styles.btn}
-      variant="text"
-      size="small"
-      style={{ backgroundColor: 'lightgrey' }}
-    >
+    <Button onClick={signIn} className={styles.btn} variant="text" size="small">
       <img src={svg} className={styles.icon} alt="" />
       <span>Sign in with Microsoft</span>
     </Button>
