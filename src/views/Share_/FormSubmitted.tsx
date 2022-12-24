@@ -4,8 +4,12 @@ import { FC } from 'react';
 import { ShareContext, State } from '@views/Share';
 import { useContextSelector } from 'use-context-selector';
 import { DocumentData } from '@firebase/firestore';
+import Popover from '@mui/material/Popover';
+import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
+import { useNavigate } from 'react-router';
 
 const FormSubmitted: FC = () => {
+  const navigate = useNavigate();
   const document = useContextSelector(ShareContext, (c) => c.document);
   const setDocument = useSetMySubmission();
 
@@ -28,17 +32,54 @@ const FormSubmitted: FC = () => {
         available on axsripoff.com. This will help our collective effort to document all bad experiences so AXS can't
         hide from them.
       </Typography>
-      <Button
-        variant="text"
-        onClick={onUndo}
-        style={{ marginTop: '4rem', fontSize: '10px', color: 'black' }}
-        disableRipple
-        disableTouchRipple
-        disableFocusRipple
-        disableElevation
-      >
-        Undo Submit
+
+      <Button variant="contained" color="primary" onClick={() => navigate('/')}>
+        Back to home
       </Button>
+
+      <PopupState variant="popover" popupId="demo-popup-popover">
+        {(popupState) => (
+          <div>
+            <Button
+              variant="text"
+              style={{ marginTop: '4rem', fontSize: '10px', color: 'black' }}
+              disableRipple
+              disableTouchRipple
+              disableFocusRipple
+              disableElevation
+              {...bindTrigger(popupState)}
+            >
+              Undo Submit
+            </Button>
+
+            <Popover
+              {...bindPopover(popupState)}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+              }}
+            >
+              <Typography sx={{ p: 2 }}>
+                <Button
+                  variant="contained"
+                  color="warning"
+                  onClick={onUndo}
+                  disableRipple
+                  disableTouchRipple
+                  disableFocusRipple
+                  disableElevation
+                >
+                  Confirm Undo
+                </Button>
+              </Typography>
+            </Popover>
+          </div>
+        )}
+      </PopupState>
     </Container>
   );
 };

@@ -5,6 +5,7 @@ import useGetFirebaseUser from '@src/hooks/useGetFirebaseUser';
 import { ShareContext, State } from '@views/Share';
 
 export interface SubmissionI {
+  uid: string;
   displayName?: string;
   complaint?: string;
   images?: Array<string>;

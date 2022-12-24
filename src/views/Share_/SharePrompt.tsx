@@ -10,15 +10,18 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { Button } from '@mui/material';
 import { ShareContext, State } from '@views/Share';
 import useSetMySubmission from '@src/hooks/useSetMySubmission';
+import useGetFirebaseUID from '@src/hooks/useGetFirebaseUid';
 
 const SharePrompt: FC = () => {
   const document = useContextSelector(ShareContext, (c) => c.document);
   const setState = useContextSelector(ShareContext, (c) => c.setState);
+  const uid = useGetFirebaseUID();
   const setDocument = useSetMySubmission();
 
   const onStart = async () => {
-    if (!document) {
+    if (!document && uid) {
       await setDocument({
+        uid,
         displayName: '',
         complaint: '',
         images: [],
