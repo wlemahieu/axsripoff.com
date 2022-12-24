@@ -2,7 +2,7 @@
  * App structure, session fetch, socket listeners
  */
 import styles from './App.module.css';
-import { FC, useEffect, useRef } from 'react';
+import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router';
 import Header from '@components/Header';
 import Footer from '@components/Footer';
@@ -12,6 +12,26 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CookiesPopup from './CookiesPopup';
 import { FileValidated } from '@dropzone-ui/react';
+import { Context, createContext } from 'use-context-selector';
+import Notification from './Notification';
+
+export interface NotificationI {
+  title?: string;
+  message?: string;
+  severity?: string;
+  open?: boolean;
+}
+
+export interface StateI {
+  notification?: NotificationI;
+}
+
+export interface GlobalContextI {
+  state: StateI;
+  setState: Dispatch<SetStateAction<StateI>>;
+}
+
+export const GlobalContext = createContext<GlobalContextI | null>(null) as Context<GlobalContextI>;
 
 const theme = createTheme({
   typography: {
@@ -67,8 +87,19 @@ const App: FC = () => {
         <Footer />
       </Container>
       <CookiesPopup />
+      <Notification />
     </ThemeProvider>
   );
 };
 
-export default App;
+const GlobalProvider: FC = () => {
+  const [state, setState] = useState({});
+
+  return (
+    <GlobalContext.Provider value={{ state, setState }}>
+      <App />
+    </GlobalContext.Provider>
+  );
+};
+
+export default GlobalProvider;

@@ -17,7 +17,7 @@ import SubmissionApproved from './Share_/SubmissionApproved';
 
 export type DocumentT = undefined | DocumentData | boolean;
 
-type FileT = Array<FileValidated | string>;
+export type FileT = Array<FileValidated | string>;
 
 export enum State {
   Void = 'Void', // document not started yet
