@@ -19,7 +19,7 @@ const PublicSubmissions = () => {
   return (
     <Box sx={{ pt: 2 }}>
       {documents.map((doc, key) => (
-        <PublicSubmission key={`key-${key}`} document={doc} />
+        <PublicSubmission key={`key-${key}`} document={doc} index={documents.length - key} />
       ))}
     </Box>
   );

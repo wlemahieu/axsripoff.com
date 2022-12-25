@@ -59,8 +59,6 @@ const ImageUpload: FC = () => {
     })();
   };
 
-  console.log('files', files);
-
   return (
     <>
       <Dropzone
@@ -83,7 +81,6 @@ const ImageUpload: FC = () => {
                 {...file}
                 key={file.id}
                 onDelete={() => {
-                  console.log('onDelete file', file);
                   return onDelete(file?.file?.name);
                 }}
                 resultOnTooltip

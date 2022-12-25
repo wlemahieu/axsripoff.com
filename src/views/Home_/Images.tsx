@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from 'react';
 import { getApp } from 'firebase/app';
 import { getStorage } from '@firebase/storage';
 import { ref, getDownloadURL, StorageReference } from '@firebase/storage';
-import { ImageList, ImageListItem } from '@mui/material';
+import { Box, ImageList, ImageListItem } from '@mui/material';
 import { useContextSelector } from 'use-context-selector';
 import { GlobalContext } from '@src/components/Providers';
 
@@ -36,9 +36,19 @@ const SubmissionImages: FC<PropsI> = ({ images }: PropsI) => {
     <ImageList variant="woven" cols={3} gap={8}>
       {data.map((url: string, key: number) => {
         return (
-          <ImageListItem key={`img-${key}`} onClick={() => onViewImage(url)} sx={{ cursor: 'pointer' }}>
-            <img src={url} srcSet={url} alt={`Image #${key}`} loading="lazy" />
-          </ImageListItem>
+          <Box sx={{ background: 'rgba(14,88,144,0.6)' }}>
+            <ImageListItem
+              key={`img-${key}`}
+              onClick={() => onViewImage(url)}
+              sx={{
+                cursor: 'pointer',
+                border: '2px solid grey',
+                ':hover': { border: '2px solid lightblue', opacity: 0.5 },
+              }}
+            >
+              <img src={url} srcSet={url} alt={`Image #${key}`} loading="lazy" />
+            </ImageListItem>
+          </Box>
         );
       })}
     </ImageList>
