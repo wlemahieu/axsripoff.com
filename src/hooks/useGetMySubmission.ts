@@ -24,7 +24,7 @@ const useGetMySubmission = (): [boolean, GetDocumentT] => {
         setLoading(false);
         return data;
       } else {
-        setDocument(false);
+        setDocument(undefined);
         setLoading(false);
         return false;
       }

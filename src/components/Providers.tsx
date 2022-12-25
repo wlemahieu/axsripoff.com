@@ -16,7 +16,7 @@ export interface StateI {
   notification?: NotificationI;
   previewImgSrc?: string;
   previewImgOpen?: boolean;
-  user: UserExtended;
+  user?: UserExtended;
 }
 
 export interface GlobalContextI {
