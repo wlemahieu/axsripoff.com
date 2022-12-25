@@ -73,7 +73,11 @@ const ShareForm: FC = () => {
           );
           // create synthetic files from already uploaded files
           const syntheticFiles = urlData.map(([url, metadata]: [string, FullMetadata]) => {
-            const fileFromCDNUrl = createSyntheticFile(metadata.name, metadata.size, metadata.contentType);
+            const fileFromCDNUrl = createSyntheticFile(
+              metadata?.customMetadata?.originalFilename,
+              metadata.size,
+              metadata.contentType,
+            );
             const validateFileFromCDNUrl = makeSynthticFileValidate(
               fileFromCDNUrl,
               true,

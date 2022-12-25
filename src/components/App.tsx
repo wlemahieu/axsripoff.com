@@ -10,6 +10,7 @@ import Container from '@mui/material/Container';
 import CookiesPopup from '@components/CookiesPopup';
 import Notification from '@components/Notification';
 import styles from '@components/App.module.css';
+import ImagePreviewModal from './ImagePreviewModal';
 
 const App: FC = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -31,6 +32,7 @@ const App: FC = () => {
       </Container>
       <CookiesPopup />
       <Notification />
+      <ImagePreviewModal />
     </>
   );
 };

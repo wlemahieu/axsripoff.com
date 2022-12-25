@@ -21,10 +21,13 @@ const ImageUpload: FC = () => {
     files.map((f: unknown) => {
       const file = f as FileValidated;
 
-      const hashName = md5(`${file.file.name}-${uid}`);
+      const originalFilename = file.file.name;
+      console.log('uid', uid);
+      console.log('originalFilename', originalFilename);
+      const hashName = md5(`${originalFilename}-${uid}`);
       const storageRef = ref(storage, `submissions/${hashName}`);
       // sendEmail(values);
-      uploadBytes(storageRef, file.file, { customMetadata: { uid } }).catch((e) => console.log(e));
+      uploadBytes(storageRef, file.file, { customMetadata: { uid, originalFilename } }).catch((e) => console.log(e));
 
       return hashName;
     });

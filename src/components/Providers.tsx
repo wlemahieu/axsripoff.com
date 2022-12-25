@@ -11,6 +11,8 @@ import { NotificationI } from '@components/Notification';
 
 export interface StateI {
   notification?: NotificationI;
+  previewImgSrc?: string;
+  previewImgOpen?: boolean;
 }
 
 export interface GlobalContextI {
