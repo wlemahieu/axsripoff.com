@@ -10,8 +10,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { Button } from '@mui/material';
 import { ShareContext, State } from '@views/Share';
 import useSetMySubmission from '@src/hooks/useSetMySubmission';
-import useGetFirebaseUID from '@src/hooks/useGetFirebaseUID';
 import useGetFirebaseUser from '@src/hooks/useGetFirebaseUser';
+import { DateTime } from 'luxon';
 
 const SharePrompt: FC = () => {
   const document = useContextSelector(ShareContext, (c) => c.document);
@@ -24,6 +24,7 @@ const SharePrompt: FC = () => {
 
     if (!document && user) {
       await setDocument({
+        createdAt: DateTime.now().toISO(),
         email: user?.email || '',
         displayName: '',
         complaint: '',

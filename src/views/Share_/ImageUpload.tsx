@@ -9,26 +9,34 @@ import md5 from 'md5';
 import { getStorage, ref, uploadBytes, deleteObject, getMetadata } from '@firebase/storage';
 import { getApp } from '@firebase/app';
 import useGetFirebaseUID from '@src/hooks/useGetFirebaseUID';
+import useSetMySubmission from '@src/hooks/useSetMySubmission';
+
+const getFileHash = (fileName: string, uid: string) => {
+  return md5(`${fileName}-${uid}`);
+};
 
 const ImageUpload: FC = () => {
   const files = useContextSelector(ShareContext, (c) => c.files);
+  const document = useContextSelector(ShareContext, (c) => c.document);
   const setFiles = useContextSelector(ShareContext, (c) => c.setFiles);
   const app = getApp();
   const storage = getStorage(app);
   const uid = useGetFirebaseUID();
+  const setDocument = useSetMySubmission();
 
   const onDrop = (files: FileValidated[]) => {
     files.map((f: unknown) => {
       const file = f as FileValidated;
-
       const originalFilename = file.file.name;
-      console.log('uid', uid);
-      console.log('originalFilename', originalFilename);
-      const hashName = md5(`${originalFilename}-${uid}`);
+      const hashName = getFileHash(originalFilename, uid);
       const storageRef = ref(storage, `submissions/${hashName}`);
       // sendEmail(values);
-      uploadBytes(storageRef, file.file, { customMetadata: { uid, originalFilename } }).catch((e) => console.log(e));
-
+      uploadBytes(storageRef, file.file, { customMetadata: { uid, originalFilename } })
+        .then(() => {
+          const images = document?.images || [];
+          setDocument({ ...document, images: [...images, hashName] });
+        })
+        .catch((e) => console.log(e));
       return hashName;
     });
   };
@@ -37,16 +45,21 @@ const ImageUpload: FC = () => {
     setFiles(incomingFiles);
   };
 
-  const onDelete = (hashName: string) => {
+  const onDelete = (fileName: string) => {
+    const originalFilename = fileName;
+    const hashName = getFileHash(originalFilename, uid);
     const storageRef = ref(storage, `submissions/${hashName}`);
     (async () => {
       const metadata = await getMetadata(storageRef);
       if (metadata?.customMetadata?.uid === uid) {
-        deleteObject(storageRef);
-        setFiles(files.filter((x: any) => x.file.name !== hashName));
+        await deleteObject(storageRef);
+        await setDocument({ ...document, images: document?.images?.filter((img) => img !== hashName) });
+        setFiles(files.filter((x: any) => x.file.name !== originalFilename));
       }
     })();
   };
+
+  console.log('files', files);
 
   return (
     <>
@@ -69,7 +82,10 @@ const ImageUpload: FC = () => {
               <FileItem
                 {...file}
                 key={file.id}
-                onDelete={() => onDelete(file?.file?.name)}
+                onDelete={() => {
+                  console.log('onDelete file', file);
+                  return onDelete(file?.file?.name);
+                }}
                 resultOnTooltip
                 preview
                 style={{ letterSpacing: 0 }}

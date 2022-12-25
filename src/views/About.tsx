@@ -15,7 +15,7 @@ const About: FC = () => {
         About
       </Typography>
       <div className={styles.memberBlock}>
-        <Typography variant="body2" className={styles.description}>
+        <Typography variant="body1" className={styles.description}>
           Welcome to axsripoff.com where anyone can share their negative experiences relating to AXS' website, services
           or customer support.
         </Typography>

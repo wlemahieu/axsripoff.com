@@ -5,6 +5,7 @@ import { ShareContext, State } from '@views/Share';
 import useGetFirebaseUID from './useGetFirebaseUID';
 
 export interface SubmissionI {
+  createdAt?: string;
   email?: string;
   displayName?: string;
   complaint?: string;
