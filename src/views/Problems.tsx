@@ -35,20 +35,21 @@ const Problems: FC = () => {
         </Typography>
         <Typography variant="body1" sx={{ mb: 6 }}>
           We understand that <b>in many or most cases, AXS is legally within their right to do what they are doing</b>.
-          However, it doesn't change the fact that the company's services and/or implementation of their policy can have
-          a negative effect on many consumers. <b>Here's what we've noticed so far:</b>
+          However, it doesn't change our opiniono that the company's services and/or implementation of their policy can
+          have a negative effect on many consumers. <b>Here's what we've noticed so far:</b>
         </Typography>
         <Typography variant="h4" gutterBottom>
           Abuse of the "Delayed" status
         </Typography>
         <Typography variant="body1" sx={{ mb: 3 }}>
-          How many times should a ticket purchaser have to accept a concert being "delayed" before deserving a refund?
-          Consider you or family &amp; friends may have traveled somewhere to see that concert and now have extra
-          expenses from the "delayed" concert. <b>Once? Twice? No limit on delays?</b>
+          How many times should a ticket purchaser have to accept a concert being "delayed" before deserving a refund?{' '}
+          <b>Once? Twice? No limit on delays?</b> Consider you or family &amp; friends may have traveled somewhere to
+          see that concert and now have extra expenses from the "delayed" concert.
         </Typography>
         <Typography variant="body1" sx={{ mb: 3 }}>
-          How far from the original concert date is too far for AXS or their Promoter to continue to consider a concert
-          "delayed"? <b>A month? A year? No limit on delays?</b>
+          Also how far from the original concert date is too far for AXS or their Promoter to continue to consider a
+          concert "delayed" and not "canceled"? <b>A month? A year? No limit on delays?</b> There is apparently no
+          limitation on how long something can be "delayed" or how many times.
         </Typography>
         <Box sx={{ mb: 6 }}>
           {difference ? (
@@ -57,22 +58,39 @@ const Problems: FC = () => {
                 Our editor has been waiting
               </Typography>
               <Box sx={{ mt: 1, p: 1, fontSize: '18px', fontWeight: 'bold' }}>
-                <div>{years} year(s)</div>
-                <div>{months} month(s)</div>
-                <div>{days} day(s)</div>
-                <div>{hours} hour(s)</div>
-                <div>{minutes} minute(s)</div>
-                <div>and {Math.floor(seconds)} second(s)... </div>
+                <div>
+                  {years} year{years > 1 ? 's' : ''}
+                </div>
+                <div>
+                  {months} month{months > 1 ? 's' : ''}
+                </div>
+                <div>
+                  {days} day{days > 1 ? 's' : ''}
+                </div>
+                <div>
+                  {hours} hour{hours > 1 ? 's' : ''}
+                </div>
+                <div>
+                  {minutes} minute{minutes > 1 ? 's' : ''}
+                </div>
+                <div>
+                  and {Math.floor(seconds)} second{seconds > 1 ? 's' : ''}...{' '}
+                </div>
               </Box>
 
               <Typography variant="h6" sx={{ mb: 2 }}>
                 for a concert that was supposed to happen on <b>{originalConcertDate.toISODate()}</b>!
               </Typography>
               <Typography variant="body1" sx={{ mb: 2 }}>
-                It's been delayed <b>2 times</b> already...
+                It's been delayed <b>2 times</b> and there is no communicated timeframe for when new dates will even be
+                announced. We understand it's the holiday seasons and celebrities can have health issues - however
+                people deserve a refund in this situation.
               </Typography>
               <Typography variant="body1" sx={{ mb: 2 }}>
-                <b>No refunds</b> are allowed!
+                <b>No refunds</b> are allowed which seems unreasonable given that no product or service has been
+                delivered and that AXS and their "Promoter" appear to be abusing the "delayed" status. Perhaps all the
+                money was spent by "Promoter" and they are now unable to refund people money? It's an unproven theory
+                but all we can come up with at this point.
               </Typography>
               <Typography variant="h6">Is it normal to not receive a service or product for that long?</Typography>
               <Typography variant="h5">¯\_(ツ)_/¯</Typography>
