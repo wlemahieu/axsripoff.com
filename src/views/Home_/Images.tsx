@@ -36,9 +36,8 @@ const SubmissionImages: FC<PropsI> = ({ images }: PropsI) => {
     <ImageList variant="woven" cols={3} gap={8}>
       {data.map((url: string, key: number) => {
         return (
-          <Box sx={{ background: 'rgba(14,88,144,0.6)' }}>
+          <Box key={`img-${key}`} sx={{ background: 'rgba(14,88,144,0.6)' }}>
             <ImageListItem
-              key={`img-${key}`}
               onClick={() => onViewImage(url)}
               sx={{
                 cursor: 'pointer',
