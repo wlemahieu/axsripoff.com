@@ -36,6 +36,7 @@ initializeAppCheck(app, {
 
 // connect to the local emulators
 if (import.meta.env.MODE === 'development' || import.meta.env.dev) {
+  console.log('----- DEVELOPMENT MODE -----');
   const region = 'us-west1';
   const functions = getFunctions(app, region);
   const storage = getStorage(app);
