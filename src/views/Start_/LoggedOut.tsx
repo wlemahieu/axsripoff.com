@@ -15,7 +15,10 @@ const LoggedOut: FC = () => {
   return (
     <Container maxWidth="xs">
       <Typography variant="h6" gutterBottom>
-        Please login in to share you complaint.
+        Please login in to share your complaint.
+      </Typography>
+      <Typography variant="body2" gutterBottom>
+        We do not sell or share any of your information ever.
       </Typography>
       <div className={styles.root}>
         <EmailLogin />
