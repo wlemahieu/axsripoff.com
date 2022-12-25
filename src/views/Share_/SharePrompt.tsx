@@ -11,17 +11,20 @@ import { Button } from '@mui/material';
 import { ShareContext, State } from '@views/Share';
 import useSetMySubmission from '@src/hooks/useSetMySubmission';
 import useGetFirebaseUID from '@src/hooks/useGetFirebaseUID';
+import useGetFirebaseUser from '@src/hooks/useGetFirebaseUser';
 
 const SharePrompt: FC = () => {
   const document = useContextSelector(ShareContext, (c) => c.document);
   const setState = useContextSelector(ShareContext, (c) => c.setState);
-  const uid = useGetFirebaseUID();
+  const user = useGetFirebaseUser();
   const setDocument = useSetMySubmission();
 
   const onStart = async () => {
-    if (!document && uid) {
+    return false;
+    /*
+    if (!document && user) {
       await setDocument({
-        uid,
+        email: user?.email || '',
         displayName: '',
         complaint: '',
         images: [],
@@ -29,7 +32,7 @@ const SharePrompt: FC = () => {
         unsubmitCount: 0,
       });
     }
-    setState(State.Created);
+    setState(State.Created);*/
   };
 
   return (
