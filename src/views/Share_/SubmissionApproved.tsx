@@ -1,14 +1,15 @@
-import { Button, Container, Typography } from '@mui/material';
-import useSetMySubmission from '@src/hooks/useSetMySubmission';
+import { /*Button,*/ Container, Typography } from '@mui/material';
+//import useSetMySubmission from '@src/hooks/useSetMySubmission';
 import { FC } from 'react';
-import { ShareContext, State } from '@views/Share';
-import { useContextSelector } from 'use-context-selector';
-import { DocumentData } from '@firebase/firestore';
+//import { ShareContext, State } from '@views/Share';
+//import { useContextSelector } from 'use-context-selector';
+//import { DocumentData } from '@firebase/firestore';
 
 const SubmissionApproved: FC = () => {
-  const document = useContextSelector(ShareContext, (c) => c.document);
-  const setDocument = useSetMySubmission();
+  //const document = useContextSelector(ShareContext, (c) => c.document);
+  //const setDocument = useSetMySubmission();
 
+  /*
   const onUndo = async () => {
     try {
       if (document) {
@@ -17,7 +18,7 @@ const SubmissionApproved: FC = () => {
     } catch (e) {
       console.error('Error undoing submission: ', e);
     }
-  };
+  };*/
 
   return (
     <Container maxWidth="sm">
@@ -27,6 +28,7 @@ const SubmissionApproved: FC = () => {
         on AXSRipoff.com for others to read! We appreciate you sharing your public opinion and honest account of your
         experience regarding AXS.
       </Typography>
+      {/*
       <Button
         variant="text"
         onClick={onUndo}
@@ -37,7 +39,7 @@ const SubmissionApproved: FC = () => {
         disableElevation
       >
         Remove Post
-      </Button>
+      </Button> */}
     </Container>
   );
 };

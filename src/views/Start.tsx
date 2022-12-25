@@ -12,7 +12,7 @@ const Start: FC = () => {
   const user = useGetFirebaseUser();
   return (
     <Container maxWidth="xs" className={styles.root}>
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h3" gutterBottom>
         Start
       </Typography>
       {!user ? <LoggedOut /> : null}

@@ -24,7 +24,7 @@ const Complaints: FC = () => {
 
   return (
     <Container maxWidth="sm" className={styles.root}>
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h3" gutterBottom>
         Complaints
       </Typography>
       <Button variant="contained" color="primary" onClick={onClick}>

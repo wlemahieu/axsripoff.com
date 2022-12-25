@@ -26,12 +26,22 @@ const FormSubmitted: FC = () => {
 
   return (
     <Container maxWidth="sm">
-      <Typography variant="h4">Thank you for your submission</Typography>
-      <Typography variant="body2">
-        We will review your complaint as soon as possible. If it's deemed reasonable, then we will make it publicly
-        available on axsripoff.com. This will help our collective effort to document all bad experiences so AXS can't
-        hide from them.
-      </Typography>
+      <Typography variant="h3">Thank you!</Typography>
+
+      {document?.state === State.Submitted ? (
+        <Typography variant="body2">
+          We will review your complaint as soon as possible. If it's deemed reasonable, then we will make it publicly
+          available on axsripoff.com. This will help our collective effort to document all bad experiences so AXS can't
+          hide from them.
+        </Typography>
+      ) : null}
+
+      {document?.state === State.Approved ? (
+        <Typography variant="body2">
+          Your AXS complaint has been approved and has been made publicly available on axsripoff.com. This will help our
+          collective effort to document all bad experiences so AXS can't hide from them.
+        </Typography>
+      ) : null}
 
       <Button variant="contained" color="primary" onClick={() => navigate('/')}>
         Back to home

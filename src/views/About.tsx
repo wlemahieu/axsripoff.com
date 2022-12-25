@@ -11,7 +11,7 @@ import wes from '@assets/wes.jpg';
 const About: FC = () => {
   return (
     <Container maxWidth="xs" className={styles.root}>
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h3" gutterBottom>
         About
       </Typography>
       <div className={styles.memberBlock}>

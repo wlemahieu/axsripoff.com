@@ -83,6 +83,8 @@ const Share: FC = () => {
         return <FormSubmitted />;
       case State.Approved:
         return <SubmissionApproved />;
+      default:
+        return null;
     }
   };
 

@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import { getApp } from 'firebase/app';
 import { getStorage } from '@firebase/storage';
-import { ref, getDownloadURL, StorageReference /*, getMetadata*/ } from '@firebase/storage';
+import { ref, getDownloadURL, StorageReference } from '@firebase/storage';
 import { ImageList, ImageListItem } from '@mui/material';
 import { useContextSelector } from 'use-context-selector';
 import { GlobalContext } from '@src/components/Providers';
@@ -23,6 +23,7 @@ const SubmissionImages: FC<PropsI> = ({ images }: PropsI) => {
     });
     // get file urls
     (async () => {
+      // get file urls and metadata
       setData(await Promise.all(references.map((ref: StorageReference) => getDownloadURL(ref))));
     })();
   }, []);

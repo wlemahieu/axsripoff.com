@@ -46,7 +46,7 @@ export const tabs: TabsT = [
 ];
 
 type HandleChangeT = (event: React.SyntheticEvent) => void;
-type VisibleKeyT = number;
+type VisibleKeyT = number | false;
 type ReturnT = [TabsT, VisibleKeyT, HandleChangeT];
 
 const useGetTabs = (): ReturnT => {
@@ -56,7 +56,7 @@ const useGetTabs = (): ReturnT => {
   const app = getApp();
   const auth = getAuth(app);
   const signOutAuth = () => signOut(auth);
-  const [visibleKey, setVisibleKey] = useState(0);
+  const [visibleKey, setVisibleKey] = useState<number | false>(0);
 
   const visibleTabs = tabs.filter(
     (t) => t.isPublic || (t.isPrivate && Boolean(user)) || (t.isPrivate === false && !user),
@@ -68,7 +68,11 @@ const useGetTabs = (): ReturnT => {
     const p = location.pathname.replace('/', '');
     const newPath = !p ? defaultTab : p;
     const idx = findTabIdx(newPath);
-    setVisibleKey(idx);
+    if (idx > -1) {
+      setVisibleKey(idx);
+    } else {
+      setVisibleKey(false);
+    }
   }, [location.pathname, user]);
 
   const handleChange = (event: React.SyntheticEvent) => {

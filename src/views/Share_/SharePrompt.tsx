@@ -20,8 +20,8 @@ const SharePrompt: FC = () => {
   const setDocument = useSetMySubmission();
 
   const onStart = async () => {
-    return false;
-    /*
+    // return false;
+
     if (!document && user) {
       await setDocument({
         email: user?.email || '',
@@ -32,13 +32,13 @@ const SharePrompt: FC = () => {
         unsubmitCount: 0,
       });
     }
-    setState(State.Created);*/
+    setState(State.Created);
   };
 
   return (
     <Container maxWidth="xs" className={styles.root}>
-      <Typography variant="h4" gutterBottom>
-        {document ? 'Continue' : 'Start'} your complaint.
+      <Typography variant="h3" gutterBottom>
+        {document ? 'Continue' : 'Start'} complaint
       </Typography>
       <Typography variant="body2" gutterBottom>
         {document ? (

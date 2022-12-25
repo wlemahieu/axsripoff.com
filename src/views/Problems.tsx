@@ -94,7 +94,7 @@ const Problems: FC = () => {
               <Typography variant="h5" sx={{ mb: 1 }}>
                 Our editor has received
               </Typography>
-              <Typography variant="body1" sx={{ mb: 2 }}>
+              <Box sx={{ mb: 2 }}>
                 <div>
                   <b>3+ canned responses</b> from
                 </div>
@@ -107,7 +107,7 @@ const Problems: FC = () => {
                 With verbiage repeatedely stating they are waiting for "Promoter" to establish new tour dates (for the
                 3rd time) and that refunds are not allowed. AXS explicitly does not care about their customer's
                 experience or that they can hide behind a policy to prevent giving refunds to customers for so long.
-              </Typography>
+              </Box>
               <Typography variant="h6" sx={{ mb: 1 }}>
                 This "delay" should be considered a "cancelation" at this point.
               </Typography>

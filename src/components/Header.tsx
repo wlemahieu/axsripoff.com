@@ -15,8 +15,6 @@ import logo from '@assets/android-chrome-512x512.png';
 import Navigation from '@components/Navigation';
 import useGetTabs from '@src/hooks/useGetTabs';
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-
 const Header: FC = () => {
   const navigate = useNavigate();
   const [visibleTabs, visibleKey, handleChange] = useGetTabs();
