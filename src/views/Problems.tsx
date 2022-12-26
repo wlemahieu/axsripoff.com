@@ -35,7 +35,7 @@ const Problems: FC = () => {
         </Typography>
         <Typography variant="body1" sx={{ mb: 6 }}>
           We understand that <b>in many or most cases, AXS is legally within their right to do what they are doing</b>.
-          However, it doesn't change our opiniono that the company's services and/or implementation of their policy can
+          However, it doesn't change our opinion that the company's services and/or implementation of their policy can
           have a negative effect on many consumers. <b>Here's what we've noticed so far:</b>
         </Typography>
         <Typography variant="h4" gutterBottom>
@@ -49,7 +49,7 @@ const Problems: FC = () => {
         <Typography variant="body1" sx={{ mb: 3 }}>
           Also how far from the original concert date is too far for AXS or their Promoter to continue to consider a
           concert "delayed" and not "canceled"? <b>A month? A year? No limit on delays?</b> There is apparently no
-          limitation on how long something can be "delayed" or how many times.
+          limitation on how long or how many times an event can be "delayed".
         </Typography>
         <Box sx={{ mb: 6 }}>
           {difference ? (
@@ -79,18 +79,18 @@ const Problems: FC = () => {
               </Box>
 
               <Typography variant="h6" sx={{ mb: 2 }}>
-                for a concert that was supposed to happen on <b>{originalConcertDate.toISODate()}</b>!
+                ...for a concert that was supposed to happen on <b>{originalConcertDate.toISODate()}</b>!
               </Typography>
               <Typography variant="body1" sx={{ mb: 2 }}>
                 It's been delayed <b>2 times</b> and there is no communicated timeframe for when new dates will even be
-                announced. We understand it's the holiday seasons and celebrities can have health issues - however
-                people deserve a refund in this situation.
+                announced. We understand it's the holiday season and celebrities have health issues too - however people
+                deserve a refund in this situation.
               </Typography>
               <Typography variant="body1" sx={{ mb: 2 }}>
-                <b>No refunds</b> are allowed which seems unreasonable given that no product or service has been
-                delivered and that AXS and their "Promoter" appear to be abusing the "delayed" status. Perhaps all the
-                money was spent by "Promoter" and they are now unable to refund people money? It's an unproven theory
-                but all we can come up with at this point.
+                Yet <b>no refunds</b> are allowed which seems unreasonable given that no product or service has been
+                delivered and that AXS and their "Promoter" appear to be abusing the "delayed" / "canceled" event
+                status. Perhaps all the money was spent by "Promoter" and they are now unable to refund people money?
+                It's an unproven theory but all we can come up with at this point.
               </Typography>
               <Typography variant="h6">Is it normal to not receive a service or product for that long?</Typography>
               <Typography variant="h5">¯\_(ツ)_/¯</Typography>
@@ -117,10 +117,10 @@ const Problems: FC = () => {
                   <b>3+ canned responses</b> from
                 </div>
                 <div>
-                  <b>4+ customer service agents spanning</b>
+                  <b>3+ customer service agents spanning</b>
                 </div>
                 <div>
-                  <b>3.5+ months</b>
+                  <b>3+ months</b>
                 </div>
                 With verbiage repeatedely stating they are waiting for "Promoter" to establish new tour dates (for the
                 3rd time) and that refunds are not allowed. AXS explicitly does not care about their customer's
