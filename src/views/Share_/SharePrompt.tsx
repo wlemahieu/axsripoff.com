@@ -21,7 +21,6 @@ const SharePrompt: FC = () => {
 
   const onStart = async () => {
     // return false;
-
     if (!document && user) {
       await setDocument({
         createdAt: DateTime.now().toISO(),
@@ -50,13 +49,9 @@ const SharePrompt: FC = () => {
         &nbsp;Be <b>truthful</b> and accurate. You can optionally provide up to 6 images to describe your situation. All
         submissions <b>will be reviewed</b> before being made live on the website.
       </Typography>
-      {document === undefined ? (
-        <CircularProgress />
-      ) : (
-        <Button variant="contained" color="primary" onClick={onStart}>
-          {document ? 'Continue' : 'Start'}
-        </Button>
-      )}
+      <Button variant="contained" color="primary" onClick={onStart}>
+        {document ? 'Continue' : 'Start'}
+      </Button>
     </Container>
   );
 };
