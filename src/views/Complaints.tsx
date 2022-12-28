@@ -8,12 +8,12 @@ import Container from '@mui/material/Container';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router';
 import useGetFirebaseUser from '@src/hooks/useGetFirebaseUser';
-import PublicSubmissions from '@views/Home_/PublicSubmissions';
+import PublicSubmissions from '@src/views/Complaints_/PublicSubmissions';
 
 const Complaints: FC = () => {
   const navigate = useNavigate();
   const user = useGetFirebaseUser();
-  console.log('user', user);
+
   const onClick = () => {
     if (user) {
       navigate('/share');
