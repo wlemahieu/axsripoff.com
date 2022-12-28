@@ -11,6 +11,7 @@ import useGetFirebaseAuth from '@src/hooks/useGetFirebaseAuth';
 import { createUserWithEmailAndPassword, sendEmailVerification } from '@firebase/auth';
 import useSetNotification from '@src/hooks/useSetNotification';
 import { EmailContext } from '../Email';
+import { useNavigate } from 'react-router';
 
 type ValuesT = Record<string, string>;
 
@@ -18,6 +19,7 @@ const CreateAccount: FC = () => {
   const setChoice = useContextSelector(EmailModalContext, (c) => c?.setChoice);
   const setModalOpen = useContextSelector(EmailContext, (c) => c?.setModalOpen);
   const auth = useGetFirebaseAuth();
+  const navigate = useNavigate();
   const setNotification = useSetNotification();
 
   const validate = (values: Record<string, string>) => {
@@ -51,11 +53,12 @@ const CreateAccount: FC = () => {
             setNotification({
               title: 'Thank you',
               message: 'Please check your email for a verification link',
-              severity: 'info',
+              severity: 'success',
               open: true,
             });
             onCancel();
             setModalOpen(false);
+            navigate('/share');
           } else {
             setNotification({
               title: 'Thank you',

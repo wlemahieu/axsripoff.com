@@ -12,9 +12,22 @@ const Navigation: FC = () => {
 
   return (
     <nav className={styles.root}>
-      <Tabs value={visibleKey} onChange={handleChange} centered textColor="secondary" indicatorColor="secondary">
+      <Tabs
+        value={visibleKey}
+        onChange={handleChange}
+        centered
+        textColor="secondary"
+        indicatorColor="secondary"
+        sx={{ cursor: 'pointer' }}
+      >
         {visibleTabs.map((tab, idx) => (
-          <Tab key={`key-${idx}`} label={tab.name} id={tab.name} value={idx} sx={{ color: '#fff' }} />
+          <Tab
+            key={`key-${idx}`}
+            label={tab.name}
+            id={tab.name}
+            value={idx}
+            sx={{ color: '#fff', pointerEvents: 'auto', cursor: 'pointer' }}
+          />
         ))}
       </Tabs>
     </nav>
