@@ -23,14 +23,7 @@ const EmailLogin: FC = () => {
   return (
     <EmailContext.Provider value={{ modalOpen, setModalOpen }}>
       {modalOpen ? <EmailModal /> : null}
-      <Button
-        onClick={onStart}
-        className={loginStyles.btn}
-        variant="text"
-        size="small"
-        sx={{ backgroundColor: 'lightgrey' }}
-        disabled
-      >
+      <Button onClick={onStart} className={loginStyles.btn} variant="text" size="small">
         <Email className={loginStyles.icon} />
         <span>Sign in with email</span>
       </Button>

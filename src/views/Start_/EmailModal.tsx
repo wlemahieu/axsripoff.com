@@ -9,6 +9,7 @@ import { Context, createContext, useContextSelector } from 'use-context-selector
 import Choice from './EmailModal_/Choice';
 import CreateAccount from './EmailModal_/CreateAccount';
 import EmailSignIn from './EmailModal_/SignIn';
+import Forgot from './EmailModal_/Forgot';
 
 export interface EmailModalI {
   choice: string;
@@ -35,6 +36,20 @@ const EmailModal: FC = () => {
     setModalOpen(false);
   };
 
+  const renderContents = () => {
+    console.log('renderContents', choice);
+    switch (choice) {
+      case 'create':
+        return <CreateAccount />;
+      case 'signin':
+        return <EmailSignIn />;
+      case 'forgot':
+        return <Forgot />;
+      default:
+        return <Choice />;
+    }
+  };
+
   return (
     <EmailModalContext.Provider value={{ choice, setChoice }}>
       <Modal
@@ -44,7 +59,7 @@ const EmailModal: FC = () => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>{!choice ? <Choice /> : choice === 'create' ? <CreateAccount /> : <EmailSignIn />}</Box>
+        <Box sx={style}>{renderContents()}</Box>
       </Modal>
     </EmailModalContext.Provider>
   );

@@ -8,13 +8,15 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import { EmailModalContext } from '../EmailModal';
 import styles from './CreateAccount.module.css';
 import useGetFirebaseAuth from '@src/hooks/useGetFirebaseAuth';
-import { createUserWithEmailAndPassword } from '@firebase/auth';
+import { createUserWithEmailAndPassword, sendEmailVerification } from '@firebase/auth';
 import useSetNotification from '@src/hooks/useSetNotification';
+import { EmailContext } from '../Email';
 
 type ValuesT = Record<string, string>;
 
 const CreateAccount: FC = () => {
   const setChoice = useContextSelector(EmailModalContext, (c) => c?.setChoice);
+  const setModalOpen = useContextSelector(EmailContext, (c) => c?.setModalOpen);
   const auth = useGetFirebaseAuth();
   const setNotification = useSetNotification();
 
@@ -44,6 +46,24 @@ const CreateAccount: FC = () => {
       (async () => {
         try {
           await createUserWithEmailAndPassword(auth, email, password);
+          if (auth?.currentUser && !auth?.currentUser?.emailVerified) {
+            await sendEmailVerification(auth.currentUser);
+            setNotification({
+              title: 'Thank you',
+              message: 'Please check your email for a verification link',
+              severity: 'info',
+              open: true,
+            });
+            onCancel();
+            setModalOpen(false);
+          } else {
+            setNotification({
+              title: 'Thank you',
+              message: 'You can now share your experience',
+              severity: 'success',
+              open: true,
+            });
+          }
         } catch (e: unknown) {
           const err = e as Record<string, string>;
           if (err.message.includes('email-already-in-use')) {

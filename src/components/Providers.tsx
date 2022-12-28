@@ -9,14 +9,15 @@ import App from '@components/App';
 import useCreateTheme from '@src/hooks/useCreateTheme';
 import { NotificationI } from '@components/Notification';
 import { getApp } from 'firebase/app';
-import { useNavigate } from 'react-router';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
+import { DateTime } from 'luxon';
 
 export interface StateI {
   notification?: NotificationI;
   previewImgSrc?: string;
   previewImgOpen?: boolean;
   user?: UserExtended;
+  verificationEmailSent?: DateTime;
 }
 
 export interface GlobalContextI {
@@ -37,14 +38,12 @@ const Providers: FC = () => {
   const theme = useCreateTheme();
 
   const app = getApp();
-  const navigate = useNavigate();
   const auth = getAuth(app);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setState({ user });
-        navigate('/');
       } else {
         setState({ user: null });
       }

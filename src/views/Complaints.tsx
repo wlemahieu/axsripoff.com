@@ -13,7 +13,7 @@ import PublicSubmissions from '@views/Home_/PublicSubmissions';
 const Complaints: FC = () => {
   const navigate = useNavigate();
   const user = useGetFirebaseUser();
-
+  console.log('user', user);
   const onClick = () => {
     if (user) {
       navigate('/share');

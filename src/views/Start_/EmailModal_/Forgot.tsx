@@ -8,13 +8,15 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import { EmailModalContext } from '../EmailModal';
 import styles from './CreateAccount.module.css';
 import useGetFirebaseAuth from '@src/hooks/useGetFirebaseAuth';
-import { signInWithEmailAndPassword } from '@firebase/auth';
+import { sendPasswordResetEmail } from '@firebase/auth';
 import useSetNotification from '@src/hooks/useSetNotification';
+import { EmailContext } from '../Email';
 
 type ValuesT = Record<string, string>;
 
-const CreateAccount: FC = () => {
+const Forgot: FC = () => {
   const setChoice = useContextSelector(EmailModalContext, (c) => c?.setChoice);
+  const setModalOpen = useContextSelector(EmailContext, (c) => c?.setModalOpen);
   const auth = useGetFirebaseAuth();
   const setNotification = useSetNotification();
 
@@ -33,17 +35,24 @@ const CreateAccount: FC = () => {
   const formik = useFormik({
     initialValues: {
       email: '',
-      password: '',
     },
     onSubmit: (values) => {
-      const { email, password } = values;
+      const { email } = values;
       (async () => {
         try {
-          await signInWithEmailAndPassword(auth, email, password);
+          await sendPasswordResetEmail(auth, email);
+          setNotification({
+            title: 'Reset password email sent',
+            message: 'Please check your email for a reset password link',
+            severity: 'info',
+            open: true,
+          });
+          onCancel();
+          setModalOpen(false);
         } catch (e: unknown) {
           setNotification({
-            title: 'Cannot sign in',
-            message: 'Invalid email / password',
+            title: 'Cannot send verification email',
+            message: 'There was a problem sending the verification email',
             severity: 'error',
             open: true,
           });
@@ -58,11 +67,9 @@ const CreateAccount: FC = () => {
     formik.resetForm();
   };
 
-  const onForgot = () => setChoice('forgot');
-
   return (
     <>
-      <Typography variant="h6">Sign-in with email</Typography>
+      <Typography variant="h6">Forgot Password</Typography>
 
       <form onSubmit={formik.handleSubmit}>
         <TextField
@@ -79,22 +86,6 @@ const CreateAccount: FC = () => {
           helperText={formik.touched.email && formik.errors.email}
           required
         />
-        <TextField
-          fullWidth
-          id="password"
-          name="password"
-          label="Password"
-          type="password"
-          variant="filled"
-          value={formik.values.password}
-          onChange={formik.handleChange}
-          error={!!formik.errors.password && formik.touched.password}
-          helperText={formik.touched.password && formik.errors.password}
-          required
-        />
-        <Button fullWidth variant="text" onClick={onForgot} sx={{ mt: 3 }} size="small">
-          Forgot Password
-        </Button>
         <ButtonGroup fullWidth className={styles.actions}>
           <Button variant="contained" color="warning" onClick={onCancel}>
             Cancel
@@ -106,7 +97,7 @@ const CreateAccount: FC = () => {
             type="submit"
             disabled={!formik.isValid || !formik.dirty}
           >
-            Signin
+            Send Reset Link
           </Button>
         </ButtonGroup>
       </form>
@@ -114,4 +105,4 @@ const CreateAccount: FC = () => {
   );
 };
 
-export default CreateAccount;
+export default Forgot;
