@@ -33,7 +33,7 @@ const TweetComponent: FC<PropsI> = ({ id, categories }: PropsI) => {
   }, [isIntersecting]);
 
   return (
-    <Box ref={containerRef} sx={{ mt: 3, mb: 5, minWidth: '550px', minHeight: '400px' }}>
+    <Box ref={containerRef} sx={{ mt: 2, mb: 2, minWidth: '550px', minHeight: '400px' }}>
       <Box>
         {categories.map((category: string) => (
           <Chip label={startCase(category)} sx={{ ml: 1 }} color="error" />
