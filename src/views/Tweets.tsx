@@ -33,14 +33,14 @@ const TweetComponent: FC<PropsI> = ({ id, categories }: PropsI) => {
   }, [isIntersecting]);
 
   return (
-    <li ref={containerRef} style={{ width: '550px', height: '400px' }}>
+    <Box ref={containerRef} style={{ minWidth: '550px', minHeight: '400px' }}>
       <Box>
         {categories.map((category: string) => (
           <Chip label={startCase(category)} sx={{ ml: 1 }} color="error" />
         ))}
       </Box>
       {loaded ? <Tweet tweetId={id} /> : null}
-    </li>
+    </Box>
   );
 };
 
@@ -66,11 +66,9 @@ const Tweets: FC = () => {
       <Typography variant="h3" gutterBottom>
         Negative AXS Tweets
       </Typography>
-      <ul>
-        {tweets.map((tweet) => (
-          <TweetComponent {...tweet} />
-        ))}
-      </ul>
+      {tweets.map((tweet) => (
+        <TweetComponent {...tweet} />
+      ))}
     </Container>
   );
 };
