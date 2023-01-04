@@ -32,6 +32,7 @@ const TweetComponent: FC<PropsI> = ({ id, categories }: PropsI) => {
     if (!loaded) setLoaded(true);
   }, [isIntersecting]);
 
+  console.log({ id, categories });
   return (
     <Box ref={containerRef} sx={{ mt: 2, mb: 2, minWidth: '550px', minHeight: '200px' }}>
       <Box>
@@ -39,7 +40,7 @@ const TweetComponent: FC<PropsI> = ({ id, categories }: PropsI) => {
           <Chip label={startCase(category)} sx={{ ml: 1 }} color="error" />
         ))}
       </Box>
-      {loaded ? <Tweet tweetId={id} /> : null}
+      {loaded && id ? <Tweet tweetId={id} /> : null}
     </Box>
   );
 };
