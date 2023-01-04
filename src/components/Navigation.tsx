@@ -6,6 +6,7 @@ import styles from '@components/Navigation.module.css';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import useGetTabs from '@src/hooks/useGetTabs';
+import { startCase } from 'lodash';
 
 const Navigation: FC = () => {
   const [visibleTabs, visibleKey, handleChange] = useGetTabs();
@@ -23,7 +24,7 @@ const Navigation: FC = () => {
         {visibleTabs.map((tab, idx) => (
           <Tab
             key={`key-${idx}`}
-            label={tab.name}
+            label={startCase(tab.name)}
             id={tab.name}
             value={idx}
             sx={{ color: '#fff', pointerEvents: 'auto', cursor: 'pointer' }}

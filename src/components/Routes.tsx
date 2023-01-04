@@ -3,7 +3,7 @@
  */
 import { FC } from 'react';
 import { Route, Routes as RouteSwitch } from 'react-router-dom';
-import Home from '@src/views/Complaints';
+import Complaints from '@src/views/Complaints';
 import About from '@views/About';
 import Terms from '@src/views/Terms';
 import Privacy from '@src/views/Privacy';
@@ -13,6 +13,7 @@ import Start from '@src/views/Start';
 import Share from '@views/Share';
 import Verify from '@src/views/Verify';
 import Problems from '@src/views/Problems';
+import Tweets from '@src/views/Tweets';
 import useGetFirebaseUser from '@src/hooks/useGetFirebaseUser';
 
 const Routes: FC = () => {
@@ -20,7 +21,8 @@ const Routes: FC = () => {
 
   return (
     <RouteSwitch>
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<Tweets />} />
+      <Route path="/complaints" element={<Complaints />} />
       <Route path="/about" element={<About />} />
       <Route path="/problems" element={<Problems />} />
       <Route path="/terms" element={<Terms />} />

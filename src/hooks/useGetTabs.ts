@@ -7,8 +7,9 @@ import { useLocation, useNavigate } from 'react-router';
 import useGetFirebaseUser from './useGetFirebaseUser';
 import { getAuth, signOut } from 'firebase/auth';
 import { getApp } from 'firebase/app';
+import kebabCase from 'lodash/kebabCase';
 
-const defaultTab = 'complaints';
+const defaultTab = 'negative-tweets';
 
 interface TabI {
   name: string;
@@ -19,6 +20,10 @@ interface TabI {
 type TabsT = Array<Partial<TabI>>;
 
 export const tabs: TabsT = [
+  {
+    name: 'negative-tweets',
+    isPublic: true,
+  },
   {
     name: 'complaints',
     isPublic: true,
@@ -62,7 +67,7 @@ const useGetTabs = (): ReturnT => {
     (t) => t.isPublic || (t.isPrivate && Boolean(user)) || (t.isPrivate === false && !user),
   );
 
-  const findTabIdx = (tab: string) => visibleTabs.findIndex((t) => t.name === tab);
+  const findTabIdx = (tab: string) => visibleTabs.findIndex((t) => t.name === kebabCase(tab));
 
   useEffect(() => {
     const p = location.pathname.replace('/', '');
@@ -78,7 +83,7 @@ const useGetTabs = (): ReturnT => {
   const handleChange = (event: React.SyntheticEvent) => {
     const target = event.target as HTMLElement;
     const { id } = target;
-    const url = id === defaultTab ? `/` : `/${id}`;
+    const url = id === defaultTab ? `/` : `/${kebabCase(id)}`;
     const idx = findTabIdx(id);
 
     if (id === `logout`) {

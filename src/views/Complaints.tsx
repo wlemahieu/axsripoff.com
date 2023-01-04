@@ -27,7 +27,10 @@ const Complaints: FC = () => {
       <Typography variant="h3" gutterBottom>
         Complaints
       </Typography>
-      <Button variant="contained" color="primary" onClick={onClick}>
+      <Typography variant="body1" gutterBottom>
+        Have more to share? Signup for free and tell us more! It takes just 30 seconds...
+      </Typography>
+      <Button variant="contained" color="primary" onClick={onClick} sx={{ mt: 1 }}>
         Share your complaint
       </Button>
       <PublicSubmissions />

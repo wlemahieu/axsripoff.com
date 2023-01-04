@@ -37,7 +37,6 @@ const EmailModal: FC = () => {
   };
 
   const renderContents = () => {
-    console.log('renderContents', choice);
     switch (choice) {
       case 'create':
         return <CreateAccount />;
