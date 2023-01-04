@@ -1,8 +1,8 @@
 /**
  * All component routes
  */
-import { FC } from 'react';
-import { Route, Routes as RouteSwitch } from 'react-router-dom';
+import { FC, useEffect } from 'react';
+import { Route, Routes as RouteSwitch, useNavigate } from 'react-router-dom';
 import Complaints from '@src/views/Complaints';
 import About from '@views/About';
 import Terms from '@src/views/Terms';
@@ -18,6 +18,13 @@ import useGetFirebaseUser from '@src/hooks/useGetFirebaseUser';
 
 const Routes: FC = () => {
   const user = useGetFirebaseUser();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      navigate('/share');
+    }
+  }, [user]);
 
   return (
     <RouteSwitch>
